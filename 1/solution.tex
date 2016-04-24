@@ -1,0 +1,58 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{url,graphicx,tabularx,array,geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{paralist}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{ textcomp }
+\usepackage{ mathrsfs }
+
+
+\pagestyle{fancy}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+
+
+\setlength{\parskip}{1ex} %--skip lines between paragraphs
+\setlength{\parindent}{0pt} %--don't indent paragraphs
+
+%-- Commands for header
+\newcommand{\bs}{\ensuremath{\backslash}}
+\renewcommand{\title}[1]{\textbf{#1}\\}
+\renewcommand{\line}{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}\hline\\\end{tabularx}\\[-0.5cm]}
+\newcommand{\leftright}[2]{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}#1%
+& #2\\\end{tabularx}\\[-0.5cm]}
+%\linespread{2} %-- Uncomment for Double Space
+\begin{document}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{}
+\fancyhead[L]{
+\leftright{\textbf{Übungsblatt 1}}{Daniel Schmidt}
+\line
+\leftright{\textbf{Datenbanktheorie SS 16}}{}}
+\fancyfoot[C]{\thepage}
+
+\section*{Aufgabe 1}
+Eine Interpretation $I_1$ unter der F wahr ist wäre 
+
+\section*{Aufgabe 2}
+
+\subsection*{a)}
+
+F1 ist nicht erfüllbar, denn hierzu müsse  $p(a,c)$ genau so gelten wie, dass für alle X $p(a,X) \Longrightarrow X = b$ gilt. Das bedeutet, dass $c = b$ gelten müsse	, was nicht wahr sein kann, da Konstanten nicht gleich sein dürfen.\\
+
+F2 ist erfüllbar, da es beispielsweise ein b geben könnte für das entsprechend $b \neq a$ gilt, also $\neg p(b)$ wahr wäre.
+
+\subsection*{b)}
+
+Wie in a) erwähnt ist diese Formel nicht erfüllbar, es gibt aus keine geeignete Relation. Die Begründung hierzu ist in a) gegeben.\\
+
+Eine Interpretation für b) wäre eine Domäne, welche b beinhaltet, dies aber nicht in p enthalten ist, also $\neg p(b)$ gilt.
+
+\section*{Aufgabe 3}
+
+
+\end{document}
