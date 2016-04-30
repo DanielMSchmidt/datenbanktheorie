@@ -1,44 +1,211 @@
-\documentclass[12pt, a4paper]{article}
-\usepackage{url,graphicx,tabularx,array,geometry}
+\documentclass[12pt,a4paper]{amsart}
+
+\synctex = 1
+
+\input{alphabets}
+\input{commands}
+\input{environments}
+
+\usepackage{amsmath,amsthm,amssymb}
 \usepackage[utf8]{inputenc}
-\usepackage{paralist}
-\usepackage{latexsym}
-\usepackage{fancyhdr}
-\usepackage{ textcomp }
-\usepackage{ mathrsfs }
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{nicefrac}
+\usepackage{listings}
+\usepackage{pictex}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{german}
 
 
-\pagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-
-
-
-\setlength{\parskip}{1ex} %--skip lines between paragraphs
-\setlength{\parindent}{0pt} %--don't indent paragraphs
-
-%-- Commands for header
-\newcommand{\bs}{\ensuremath{\backslash}}
-\renewcommand{\title}[1]{\textbf{#1}\\}
-\renewcommand{\line}{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}\hline\\\end{tabularx}\\[-0.5cm]}
-\newcommand{\leftright}[2]{\begin{tabularx}{\textwidth}{X>{\raggedleft}X}#1%
-& #2\\\end{tabularx}\\[-0.5cm]}
-%\linespread{2} %-- Uncomment for Double Space
 \begin{document}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhf{}
-\fancyhead[L]{
-\leftright{\textbf{Übungsblatt 2}}{Pamela Fleischmann, Daniel Schmidt}
-\line
-\leftright{\textbf{Datenbanktheorie SS 16}}{}}
-\fancyfoot[C]{\thepage}
 
-\section*{Aufgabe 1}
-\section*{Aufgabe 2}
-\section*{Aufgabe 3}
+\title{Blatt 2}
 
+\author{Pamela Fleischmann \& Daniel Schmidt}
 
+\maketitle
+
+\begin{aufgabe1}
+a) $\lnot =(a1,c4)$ ist in $\mathcal{T}_1$ nicht beweisbar.\\
+b) $\lnot do(a0)$ ist in $\mathcal{T}_2$ nicht beweisbar.
+\end{aufgabe1}
+
+\medskip
+
+TBC
+
+\bigskip
+
+\begin{aufgabe1}
+Gegeben seien zum Schema die Integritätsbedingungen\\
+$f_1:(\exists X)(\exists Z)(\akte(X,\offen,Z))$\\
+$f_2:(\forall X_1)(\forall X_2)(\forall Y)(\ltdermittler(X_1,Y)\land\ltdermittler(X_2,Y)\Rightarrow$\\ $=(X_1,X_2))$\\
+$f_3:(\forall X)(\forall Y)(\ermittler(X,Y)\Rightarrow\lnot\ltdermittler(X,X))$\\
+$f_4:(\forall X_1)(\forall Z)(\exists X_2)(\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\land$\\ $\bearbeitet(X_2,X_1))$\\
+a) Geben Sie für $f_1,\dots,f_4$ natürlichsprachliche Formulierungen an.\\
+b) $(\mathcal{R},I,IB)$ ist erlaubt.\\
+c) $f_1$ und $f_2$ sind Sätze der durch $\mathcal{R}$ und $I$ gegeben Theorie.
+\end{aufgabe1}
+
+\medskip
+
+ad a) Die Formel $f_1$ ist natürlichsprachlich \glqq Für jede offene Akte existiert ein Ermittler und eine erforderliche Abteilung.\grqq . Mit
+der zweiten Formel wird sichergestellt, dass jeder Ermittler nur einen leitenden Ermittler hat (gäbe es zwei, müssten diese identisch sein). $f_3$
+natürlichsprachlich formuliert gibt an, dass kein Ermittler leitender Ermittler von sich selbst sein kann. Die letzte Integritätsbedingung gibt
+schließlich an, dass für jede offene Akte mit dem Fall $X_1$ und der erforderlichen Stelle $Z$, ein Ermittler $X_2$ existiert, der in $Z$ arbetiet und
+$X_1$ bearbeitet.
+
+\medskip
+
+ad b) Um zu zeigen, dass $(\mathcal{R},I,IB)$ erlaubt ist, muss gezeigt werden, dass $\models_If_i$ für $i\in[4]$ gilt. Sei $\varrho$ eine Belegung.
+Dann gilt
+\begin{align*}
+&\models_{I,\varrho}    (\exists X)(\exists Z)(\akte(X,\offen,Z))\\
+&\gdw \models_{I,\varrho}    \lnot (\forall X) (\lnot (\exists Z)(\akte(X,\offen,Z)))\\
+&\gdw \not\models_{I,\varrho}(\forall X)(\lnot(\exists Z)(\akte(X,\offen,Z))).
+\end{align*}
+Sei $\varrho_1$ eine Belegung, die sich von $\varrho$ höchstens in der Belegung von $X$ unterscheidet. Damit folgt
+\begin{align*}
+&\models_{I,\varrho} f_1\\
+&\gdw\not\models_{I,\varrho_1} \lnot (\exists Z)(\akte(X,\offen,Z))\\
+&\gdw\not\models_{I,\varrho_1} (\forall Z)\lnot (\akte(X,\offen,Z)).
+\end{align*}
+Sei $\varrho_2$ eine Belegung, die sich von $\varrho_1$ höchstens in der Belegung von $Z$ unterscheidet. Damit folgt
+\begin{align*}
+&\models_{I,\varrho} f_1\\
+&\gdw\not\models_{I,\varrho_2} \lnot (\akte(X,\offen,Z))\\
+&\gdw\lnot\models_{I,\varrho_2} (||X||_{I,\varrho_2},||\offen||_{I,\varrho_2},||Z||_{I,\varrho_2})\not\in\ext(\akte)\\
+&\gdw\models_{I,\varrho_2}(||X||_{I,\varrho_2},\offen,||Z||_{I,\varrho_2})\not\in\ext(\akte).
+\end{align*}
+Mit $\varrho_2(X)=\Einbruch$ und $\varrho_2(Z)=\Pathologie$ gilt die Behauptung.
+
+\medskip
+
+Weiter gilt mit der Belegung $\varrho_3$, die sich von $\varrho$ höchstens in der Belegung von $X_1$ unterscheidet
+\begin{align*}
+&\models_{I,\varrho} (\forall X_1)(\forall X_2)(\forall Y)(\ltdermittler(X_1,Y)\land\ltdermittler(X_2,Y)\\
+&\quad \Rightarrow =(X_1,X_2))\\
+&\gdw\models_{I,\varrho_3} (\forall X_2)(\forall Y)(\ltdermittler(X_1,Y)\land\ltdermittler(X_2,Y)\\
+&\quad \Rightarrow =(X_1,X_2)).
+\end{align*}
+Sei $\varrho_4$ eine Belegung, die sich von $\varrho_3$ höchstens in der Belegung von $X_2$ unterscheidet und $\varrho_5$ eine, die sich von $\varrho_4$ höchstens
+in der Belegung von $Y$ unterscheidet. Dann gilt
+\begin{align*}
+&\models_{I,\varrho}f_2\\
+&\gdw \models_{I,\varrho_4}(\forall Y)(\ltdermittler(X_1,Y)\land\ltdermittler(X_2,Y)\\
+&\quad \Rightarrow =(X_1,X_2))\\
+&\gdw \models_{I,\varrho_5}(\ltdermittler(X_1,Y)\land\ltdermittler(X_2,Y)\Rightarrow =(X_1,X_2))\\
+&\gdw \models_{I,\varrho_5}(\lnot \ltdermittler(X_1,Y)\lor\lnot\ltdermittler(X_2,Y)\lor =(X_1,X_2))\\
+&\gdw \models_{I,\varrho_5}\lnot \ltdermittler(X_1,Y)\mbox{ oder }\lnot\models_{I,\varrho_5}\ltdermittler(X_2,Y)\\
+ &\quad\mbox{ oder }\models_{I,\varrho_5}=(X_1,X_2))\\
+&\gdw \not\models_{I,\varrho_5}\ltdermittler(X_1,Y)\mbox{ oder }\not\models_{I,\varrho_5}\ltdermittler(X_2,Y)\\
+&\quad \mbox{ oder }\models_{I,\varrho_5}(X_1,X_2)\\
+&\gdw (||X_1||_{I,\varrho_5},||Y||_{I,\varrho_5})\not\in\ext(\ltdermittler)\\
+&\quad \mbox{ oder }(||X_2||_{I,\varrho_5},||Y||_{I,\varrho_5})\not\in\ext(\ltdermittler)\\
+   &\quad \mbox{ oder }(||X_1||_{I,\varrho_5},||X_2||_{I,\varrho_5})\in\ext(=)\\
+   &\gdw (||X_1||_{I,\varrho_5},||Y||_{I,\varrho_5})\not\in\ext(\ltdermittler)\\
+   &\quad \mbox{ oder }(||X_2||_{I,\varrho_5},||Y||_{I,\varrho_5})\not\in\ext(\ltdermittler)\\
+  &\quad \mbox{ oder }||X_1||_{I,\varrho_5}=||X_2||_{I,\varrho_5})
+\end{align*}
+Mit $\varrho_5(X_1)=\Skinner$, $\varrho_5(Y)=\Black$ ist das erste Disjunkt wahr und damit ist $I$ Modell von $f_2$.
+
+\medskip
+
+Sei nun $\varrho_6$ eine Belegung, die sich von $\varrho$ höchstens in der Belegung von $X$ unterscheidet und $\varrho_7$ eine Belegung, die sich höchstens
+in der Belegung von $Y$ unterscheidet. Dann gilt
+\begin{align*}
+&\models_{I,\varrho} (\forall X)(\forall Y)(\ermittler(X,Y)\Rightarrow\lnot\ltdermittler(X,X))\\
+&\gdw \models_{I,\varrho_6} (\forall Y)(\ermittler(X,Y)\Rightarrow\lnot\ltdermittler(X,X))\\
+&\gdw \models_{I,\varrho_7} (\ermittler(X,Y)\Rightarrow\lnot\ltdermittler(X,X))\\
+&\gdw \models_{I,\varrho_7} (\lnot \ermittler(X,Y)\lor\lnot\ltdermittler(X,X))\\
+&\gdw \models_{I,\varrho_7} \lnot\ermittler(X,Y)\mbox{ oder } \models_{I,\varrho_7}\lnot\ltdermittler(X,X)\\
+&\gdw \not \models_{I,\varrho_7} \ermittler(X,Y)\mbox{ oder } \not \models_{I,\varrho_7}\ltdermittler(X,X)\\
+&\gdw (||X||_{I,\varrho_7},||Y||_{I,\varrho_7})\not\in\ext(\ermittler)\\
+&\quad\mbox{ oder } (||X||_{I,\varrho_7},||X||_{I,\varrho_7})\not\in\ext(\ltdermittler).
+\end{align*}
+Mit $\varrho_7(X)=\Black$ und $\varrho_7(Y)=\Pathologie$ ist das erste Disjunkt waht und die Behauptung bewiesen.
+
+\medskip
+
+Sei nun $\varrho_8$ eine Belegung, die sich von $\varrho$ höchstens in der Belegung von $X_1$ unterscheidet und $\varrho_9$ eine Belegung, die sich höchstens
+in der Belegung von $Z$ unterscheidet. Dann gilt
+\begin{align*}
+&\models_{I,\varrho} (\forall X_1)(\forall Z)(\exists X_2)(\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\\
+&\quad \land\bearbeitet(X_2,X_1)) \\
+&\gdw \models_{I,\varrho_8} (\forall Z)(\exists X_2)(\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\\
+&\quad\land\bearbeitet(X_2,X_1)) \\
+&\gdw \models_{I,\varrho_9} (\exists X_2)(\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\\
+&\quad\land\bearbeitet(X_2,X_1)) \\
+&\gdw \not \models_{I,\varrho_9} (\forall X_2)\lnot (\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\\
+&\quad\land\bearbeitet(X_2,X_1)).
+\end{align*}
+Sei weiter $\varrho_{10}$ eine Belegung, die sich von $\varrho_9$ höchstens in der Belegung von $\varrho_9$ unterscheidet. Damit folgt
+\begin{align*}
+&\models_{I,\varrho} f_4\\
+&\gdw \not \models_{I,\varrho_{10}} \lnot (\akte(X_1,\offen,Z)\Rightarrow\ermittler(X_2,Z)\\
+&\quad\land\bearbeitet(X_2,X_1))\\
+&\gdw \not \models_{I,\varrho_{10}} (\akte(X_1,\offen,Z)\land(\lnot \ermittler(X_2,Z)\\
+&\quad\lor\lnot\bearbeitet(X_2,X_1)))\\
+&\gdw \not \models_{I,\varrho_{10}} \akte(X_1,\offen,Z)\mbox{ und }\not \models_{I,\varrho_{10}}(\lnot \ermittler(X_2,Z)\\
+&\quad\lor\lnot\bearbeitet(X_2,X_1)))\\
+&\gdw \not \models_{I,\varrho_{10}} \akte(X_1,\offen,Z)\mbox{ und }(\not \models_{I,\varrho_{10}}\lnot \ermittler(X_2,Z)\\
+&\quad\mbox{ oder }\lnot \models_{I,\varrho_{10}}\lnot\bearbeitet(X_2,X_1)))\\
+&\gdw (||X_1||_{I,\varrho_{10}},||\offen||_{I,\varrho_{10}},||Z||_{I,\varrho_{10}})\not\in\ext(\akte)\\
+&\quad\mbox{ und }
+( (||X_2||_{I,\varrho_{10}},||Z||_{I,\varrho_{10}})\in\ext(\ermittler)\\
+&\quad\mbox{ oder } (||X_2||_{I,\varrho_{10}},||X_1||_{I,\varrho_{10}})\in\ext(\bearbeitet) ).
+\end{align*}
+Sei $\varrho_{10}(X_2)=\Black,\varrho_{10}(Z)=\Sonderermittler$. Für jede Belegung von $X_1$ ist $f_4$ wahr.
+
+\medskip
+
+ad c) Mit den Axiomen aus der Vorlesung gilt
+\[
+\mathcal{T}\vdash \akte(\Einbruch,\offen,\Pathologie).
+\]
+Wird zweimal die Partikularisierungsregel (Oberschelp) angewendet, so gilt 
+\[
+\mathcal{T}\vdash(\exists X)(\exists Z)(\akte(X,\offen,Z)).
+\]
+Gehe nun davon aus, dass $\mathcal{T}\vdash\wle(X_1,Y)$ und $\mathcal{T}\vdash\wle(X_2,Y)$ gilt. Mit Oberschelp ist nun $\mathcal{T}\vdash(X_1,X_2)$ zu zeigen.
+Es gilt mit den Axiomen der Vorlesung
+\begin{align*}
+\mathcal{T} &\vdash \wle(X_1,Y)\land(\Name(\Mulder)\lor\Name(\Skully))\\
+&\quad \land =(Y,name)\land =(X_1,\Skinner)\land\wle(X_2,Y)\land =(X_2,\Skinner).
+\end{align*}
+Mit der Transitivität und Kommutativität von $=$ folgt $\mathcal{T}\vdash=(X_1,X_2)$. Mit der Konjunktionsregel und der Generalisierungsregel folgt
+die Behauptung.
+
+\bigskip
+
+\begin{aufgabe1}
+Formulieren Sie folgende Integritätsbedingungen im DRC:\\
+a) Es muss eine Vorlesung geben, die keine Voraussetzung benötigt.\\
+b) Keine Vorlesung darf sich selbst als Voraussetzung haben.\\
+c) Jede Vorlesung wird nur von einem Dozenten gehalten.\\
+d) In STUDENT ist Wohnsitz mehrwertig abhängig von Student.\\
+e) Mindestens eine der Vorlesungen InfI, InfII und InfIII muss angeboten werden.
+\end{aufgabe1}
+
+ad a) $(\exists v)(\exists d)(\mbox{ANGEBOT}(v,d)\land(\forall v')(\forall c)(\mbox{VORAUSSETZUNG}(v',c)\Rightarrow v\neq v')$\\
+
+\medskip
+
+ad b) Diese Anfrage ist nicht für beliebige Zustände konkret formulierbar, da die tranistive Hülle einer binären Relation in PL1-Logik nicht ausdrückbar ist. Hierzu würde man eine Anfragesprache benötigen die Rekursion zulässt.
+
+\medskip
+
+ad c) $(\forall v)(\forall d_1)(\forall d_2)(\mbox{ANGEBOT}(v,d_1)\land\mbox{ANGEBOT}(v,d_2)\Rightarrow d_1=d_2)$\\
+
+\medskip
+
+ad d) $(\forall s)(\forall w_1,w_2)(\forall f_1,f_2)(\mbox{STUDENT}(s,w_1,f_1)\land\mbox{STUDENT}(s,w_2,f_2)\Rightarrow(\exists w)(\exists f)(\mbox{STUDENT}(s,w,f)\land w=w_2\land f=f_1)$
+
+\medskip
+
+ad e) $(\exists v)(\exists d)(\mbox{ANGEBOT}(v,d)\land (v=INFI\lor v=INFII\lor v=INFIII))$
 
 \end{document}
