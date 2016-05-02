@@ -35,10 +35,35 @@ b) $\lnot do(a0)$ ist in $\mathcal{T}_2$ nicht beweisbar.
 
 \medskip
 
-ad a) Damit die Aussage  $\lnot =(a1,c4)$ in  $\mathcal{T}_1$  beweisbar sein kann muss zunächst $\lnot$ in $\mathcal{T}_1$ definiert sein. Da dies nicht der Fall ist ist die Aussgae auch nicht beweisbar.
+ad a) Annahme: $\mathcal{T}_1 \vdash \lnot = (a1, c4)$. Dann existiert eine Ableitung für $\lnot = (a1, c4)$ also für $(\exists X)(\exists Y) \lnot(= (a1, c4))$ und somit für $\lnot (\forall X) (\forall Y)(= (X, Y))$
+
+\begin{equation}
+\begin{split}
+\lnot (\forall X) (\forall Y)(= (X, Y)) &=^1 \lnot (\forall X) (\forall Y)((= (X, Y)) \wedge (= (Y, X)))\\
+&\Rightarrow^2 \lnot (\forall X) (\forall Y) ((= (X, Y)) \wedge (= (Y, X)) \Rightarrow (= (X, X)))\\
+&\Rightarrow \lnot, \vdash \lnot = (a1, a1)
+\end{split}
+\end{equation}
+
+Dies ist ein Wiederspruch, somit ist die Aussage nicht beweisbar.
+
+Anmerkungen:
+\begin{enumerate}
+\item Ableitbar (Symmetrie)
+\item Ableitbar (Reflexivität)
+\end{enumerate}
+
 \medskip
 
-ad b) Damit $\lnot do(a0)$ in $\mathcal{T}_2$ in $\mathcal{T}_2$ beweisbar ist müsste $\lnot$ für $do(a0)$ definiert sein, dies ist jedoch in $\mathcal{T}_2$ nur für Paare definiert.
+ad b) Annahme: $\mathcal{T}_2 \vdash \lnot do(a0)$
+
+\begin{equation}
+\begin{split}
+\mathcal{T}_2 \vdash \lnot do(a0) &\Rightarrow \mathcal{T}_2 \vdash \lnot (\forall X) do(X)\\
+&\Rightarrow (\forall X) (V_{i \in [m]} = (X_i c_i) \vee \lnot do(X))\\
+&\Rightarrow (\forall X) (do(X) \Rightarrow V_{i \in [m]} = (X_i c_i))
+\end{split}
+\end{equation}
 
 \bigskip
 
