@@ -60,10 +60,12 @@ ad b) Annahme: $\mathcal{T}_2 \vdash \lnot do(a0)$
 \begin{equation}
 \begin{split}
 \mathcal{T}_2 \vdash \lnot do(a0) &\Rightarrow \mathcal{T}_2 \vdash \lnot (\forall X) do(X)\\
-&\Rightarrow (\forall X) (V_{i \in [m]} = (X_i c_i) \vee \lnot do(X))\\
-&\Rightarrow (\forall X) (do(X) \Rightarrow V_{i \in [m]} = (X_i c_i))
+&\Rightarrow (\forall X) (\bigvee_{i \in [m]} = (X_i, c_i) \vee \lnot do(X))\\
+&\Rightarrow (\forall X) (do(X) \Rightarrow \bigvee_{i \in [m]} = (X_i, c_i))
 \end{split}
 \end{equation}
+
+An dieser Stelle sind wir leider nicht weiter gekommen.
 
 \bigskip
 
