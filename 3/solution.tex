@@ -71,9 +71,6 @@ Typ 6: Jeder offene Fall wird von Mulder, Skully oder beiden bearbeitet. \\
 $\bearbeitet(\Mulder,X),\bearbeitet(\Skully,X):-\akte(X,\offen,Y)$.
 
 
-
-
-
 \bigskip
 
 \begin{aufgabe1}
@@ -84,5 +81,84 @@ ad a) {\em Kein Fall ist gelöst und offen zu gleich.} \\
 DRC: $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)((\akte(x_1,\offen,y_1)\Rightarrow\lnot\akte(x_1,\geloest,y_1))\land
 (\akte(x_2,\geloest,y_2)\Rightarrow\lnot\akte(x_2,\offen,y_2))$
 Typ 4 $\status(X):-.$
+\bigskip
+
+\begin{aufgabe1}
+\end{aufgabe1}
+
+ad a) \\
+
+\textbf{DRC}:\\
+$() / \lnot (\exists X)(\exists Y)(\exists Z) (AKTE(X, \offen, Y) \wedge AKTE(X, \geloest, Z) \wedge Y \neq Z)$ \\
+\textbf{Klauselform}:\\
+$? - akte(X, \offen, Y), \lnot akte(X, \geloest, Z), Y \neq Z$\\
+\textbf{Typ}:\\
+
+\medskip
+
+ad b) \\
+
+\textbf{DRC}:\\
+$() / (\exists X)(\exists Y) (LTD\_ERMITTLER(X, Y))$ \\
+\textbf{Klauselform}:\\
+$? - lt\_ermittler(X, Y)$\\
+\textbf{Typ}:\\
+
+\medskip
+
+ad c) \\
+
+\textbf{DRC}:\\
+$() / ((\exists X)(BEARBEITET('Mulder', X) \Rightarrow BEARBEITET('Scully', X)) \wedge (\exists Y)(BEARBEITET('Scully', Y) \Rightarrow BEARBEITET('Mulder', Y)))$ \\
+\textbf{Klauselform}:\\
+$? - bearbeitet('Mulder', Y), bearbeitet('Scully', Y)$\\
+
+\textbf{Typ}:\\
+
+\medskip
+
+
+ad d) \\
+
+\textbf{DRC}:\\
+$() / (\exists X)(AKTE('Krycek', 'offen', X) \Rightarrow BEARBEITET('Mulder', 'Krycek'))$ \\
+\textbf{Klauselform}:\\
+$? - akte('Krycek', 'offen', X), bearbeitet('Mulder', 'Krycek')$\\
+\textbf{Typ}:\\
+
+
+\medskip
+
+
+ad e) \\
+
+\textbf{DRC}:\\
+\begin{equation}
+\begin{split}
+() / (\forall X)(\exists Y)(&ERMITTLER(X, Y) \\
+\wedge ((\exists A)(&LTD\_ERMITTLER(A, X)) \vee \\
+&ERMITTLER(X, 'Sonderermittler') \vee \\
+(\exists Z)(&AKTE(X, 'offen', Z))))
+\end{split}
+\end{equation}
+
+\textbf{Klauselform}:\\
+???
+\textbf{Typ}:\\
+
+\medskip
+
+ad f) \\
+
+\textbf{DRC}:\\
+\begin{equation}
+\begin{split}
+() / \lnot (\exists X, Y, Z)(AKTE(X, 'gel\ddot{o}st', Y) \wedge BEARBEITET(Z, X))
+\end{split}
+\end{equation}
+
+\textbf{Klauselform}:\\
+???
+\textbf{Typ}:\\
 
 \end{document}
