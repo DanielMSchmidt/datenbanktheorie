@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\synctex = 1
+
+\input{alphabets}
+\input{commands}
+\input{environments}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{nicefrac}
+\usepackage{listings}
+\usepackage{pictex}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{german}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Blatt 3}
+
+\author{Pamela Fleischmann \& Daniel Schmidt}
+\maketitle
+
+
+\begin{aufgabe1}
+Diskutieren Sie analog zur Vorlesung die Klauselformen des Typs 5 und 6.
+\end{aufgabe1}
+
+\medskip
+
+Für $n\geq 1$ ist eine Klausel von Typ 5 gegeben durch
+\[
+q_1(\dots),\dots,q_n(\dots):-.
+\]
+Da der Kopf der Formel als Disjunktion interpretiert wird, entspricht diese Klauselform unvollständigem oder ungenauem Wissen. Mindestens eines
+der Prädikate muss wahr sein, es ist aber nicht klar welches. In der Theorie tritt ein Problem auf, da mit dem Vollständigkeitsaxiom auch $\lnot q_1(\dots),\dots,
+\lnot q_n(\dots)$ ableitbar sind. Zusammen mit der Klausel ergäbe dies eine inkonsistente Theorie. Um diese Inkonsistenz zu beseitigen muss garantiert werden,
+dass spezifische Negate nicht mehr ableitbar sind, wenn diese Regel vorhanden ist. Dies kann darüber erreicht werden, dass nur noch bestimmte Belegungen
+für die Variablen per Regel zugelassen werden. Weiter ist anzumerken, dass mit dieser Art der Klausel auch Fakten abgeleitet werden können: Ist $j\in[n]$
+und sind $\lnot q_i(\dots)$ für $i\in[n]\backslash\{j\}$ ableitbar, so muss wegen dieser Regel $q_j(\dots)$ ein gültiges Faktum sein.
+
+\medskip
+
+Bei Typ 6 kann das ungenaue Wissen nun noch von weiteren Fakten abhängen. Da analoge Inkonsistenzen in der Theorie auftreten können, muss durch
+eine geeignte Anpassung wieder sichergestellt werden, dass Negate nicht aufgenommen werden können. Auch dieser Typ kann als Integritätsbedingung benutzt werden, wenn
+$q_i$ als das Gleichheitsprädikat angenommen wird.
+
+\bigskip
+
+\begin{aufgabe1}
+Beispiele für Typ 5 und 6 anhand von Aufgabe 2 aus Serie 2.
+\end{aufgabe1}
+
+\medskip
+Typ 5: Irgendwer muss in der Verwaltung arbeiten. \\
+\begin{equation}
+\begin{split}
+\ermittler(\Black,\Verwaltung)&, \\
+\ermittler(\Mulder,\Verwaltung)&, \\
+\ermittler(\Skinner,\Verwaltung)&, \\
+\ermittler(\Skully,\Verwaltung)&:-.
+\end{split}
+\end{equation}
+
+Typ 6: Jeder offene Fall wird von Mulder, Skully oder beiden bearbeitet. \\
+$\bearbeitet(\Mulder,X),\bearbeitet(\Skully,X):-\akte(X,\offen,Y)$.
+
+
+
+
+
+\bigskip
+
+\begin{aufgabe1}
+
+\end{aufgabe1}
+
+ad a) {\em Kein Fall ist gelöst und offen zu gleich.} \\
+DRC: $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)((\akte(x_1,\offen,y_1)\Rightarrow\lnot\akte(x_1,\geloest,y_1))\land
+(\akte(x_2,\geloest,y_2)\Rightarrow\lnot\akte(x_2,\offen,y_2))$
+Typ 4 $\status(X):-.$
+
+\end{document}
