@@ -89,9 +89,9 @@ Typ 4 $\status(X):-.$
 ad a) \\
 
 \textbf{DRC}:\\
-$() / \lnot (\exists X)(\exists Y)(\exists Z) (AKTE(X, \offen, Y) \wedge AKTE(X, \geloest, Z) \wedge Y \neq Z)$ \\
+$() / \lnot (\exists X)(\exists Y)(\exists Z) ((AKTE(X, \offen, Y) \wedge AKTE(X, \geloest, Z)) \Rightarrow Y = Z)$ \\
 \textbf{Klauselform}:\\
-$? - akte(X, \offen, Y), \lnot akte(X, \geloest, Z), Y \neq Z$\\
+$(X, Y) :- akte(F, X, E), akte(F, Y, E)$ \\
 \textbf{Typ}:\\
 
 \medskip
@@ -99,9 +99,9 @@ $? - akte(X, \offen, Y), \lnot akte(X, \geloest, Z), Y \neq Z$\\
 ad b) \\
 
 \textbf{DRC}:\\
-$() / (\exists X)(\exists Y) (LTD\_ERMITTLER(X, Y))$ \\
+$(\exists X)(\exists Y) (LTD\_ERMITTLER(X, Y))$ \\
 \textbf{Klauselform}:\\
-$? - lt\_ermittler(X, Y)$\\
+$lt\_ermittler(X, Y) :- .$\\
 \textbf{Typ}:\\
 
 \medskip
@@ -109,9 +109,14 @@ $? - lt\_ermittler(X, Y)$\\
 ad c) \\
 
 \textbf{DRC}:\\
-$() / ((\exists X)(BEARBEITET('Mulder', X) \Rightarrow BEARBEITET('Scully', X)) \wedge (\exists Y)(BEARBEITET('Scully', Y) \Rightarrow BEARBEITET('Mulder', Y)))$ \\
+$(\exists X)(BEARBEITET('Mulder', X) \Rightarrow BEARBEITET('Scully', X)) \wedge (\exists Y)(BEARBEITET('Scully', Y) \Rightarrow BEARBEITET('Mulder', Y))$ \\
 \textbf{Klauselform}:\\
-$? - bearbeitet('Mulder', Y), bearbeitet('Scully', Y)$\\
+\begin{equation}
+\begin{split}
+team(X,Y) &:- bearbeitet(X, F), bearbeitet(Y, F). \\
+team(mulder, scully) &:-.
+\end{split}
+\end{equation}
 
 \textbf{Typ}:\\
 
@@ -121,12 +126,11 @@ $? - bearbeitet('Mulder', Y), bearbeitet('Scully', Y)$\\
 ad d) \\
 
 \textbf{DRC}:\\
-$() / (\exists X)(AKTE('Krycek', 'offen', X) \Rightarrow BEARBEITET('Mulder', 'Krycek'))$ \\
+$(\forall E)(AKTE('Krycek', 'offen', E) \Rightarrow BEARBEITET('Mulder', 'Krycek'))$ \\
 \textbf{Klauselform}:\\
-$? - akte('Krycek', 'offen', X), bearbeitet('Mulder', 'Krycek')$\\
+$bearbeitet('Mulder', 'Krycek') :- akte('Krycek', 'offen', X)$\\
 \textbf{Typ}:\\
-
-
+	
 \medskip
 
 
@@ -135,15 +139,13 @@ ad e) \\
 \textbf{DRC}:\\
 \begin{equation}
 \begin{split}
-() / (\forall X)(\exists Y)(&ERMITTLER(X, Y) \\
-\wedge ((\exists A)(&LTD\_ERMITTLER(A, X)) \vee \\
-&ERMITTLER(X, 'Sonderermittler') \vee \\
-(\exists Z)(&AKTE(X, 'offen', Z))))
+(\forall X)(\forall Y)(\forall Z)(&ERMITTLER(X, Y) \\
+\wedge (&Y \neq Sonderermittler \wedge Y \neq Verwaltung)) \Rightarrow bearbeitet(X,Z))
 \end{split}
 \end{equation}
 
 \textbf{Klauselform}:\\
-???
+$ermittler2 :- ermittler(X,Y), Y \neq sonderermittler, y \neq Werwaltung.$
 \textbf{Typ}:\\
 
 \medskip
@@ -153,12 +155,12 @@ ad f) \\
 \textbf{DRC}:\\
 \begin{equation}
 \begin{split}
-() / \lnot (\exists X, Y, Z)(AKTE(X, 'gel\ddot{o}st', Y) \wedge BEARBEITET(Z, X))
+\lnot (\forall X)(\forall Y)(\forall Z)(AKTE(X, 'gel\ddot{o}st', Y) \Rightarrow \lnot bearbeitet(X, Z))
 \end{split}
 \end{equation}
 
 \textbf{Klauselform}:\\
-???
+$:- \lnot bearbeitet(X, Z), akte(X, 'gel\ddot{o}st', Y).$
 \textbf{Typ}:\\
 
 \end{document}
