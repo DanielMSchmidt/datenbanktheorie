@@ -74,93 +74,75 @@ $\bearbeitet(\Mulder,X),\bearbeitet(\Skully,X):-\akte(X,\offen,Y)$.
 \bigskip
 
 \begin{aufgabe1}
-
-\end{aufgabe1}
-
-ad a) {\em Kein Fall ist gelöst und offen zu gleich.} \\
-DRC: $(\forall x_1)(\forall x_2)(\forall y_1)(\forall y_2)((\akte(x_1,\offen,y_1)\Rightarrow\lnot\akte(x_1,\geloest,y_1))\land
-(\akte(x_2,\geloest,y_2)\Rightarrow\lnot\akte(x_2,\offen,y_2))$
-Typ 4 $\status(X):-.$
-\bigskip
-
-\begin{aufgabe1}
 \end{aufgabe1}
 
 ad a) \\
 
-\textbf{DRC}:\\
+\paragraph{DRC}
 $() / \lnot (\exists X)(\exists Y)(\exists Z) ((AKTE(X, \offen, Y) \wedge AKTE(X, \geloest, Z)) \Rightarrow Y = Z)$ \\
-\textbf{Klauselform}:\\
-$(X, Y) :- akte(F, X, E), akte(F, Y, E)$ \\
-\textbf{Typ}:\\
+\paragraph{Klauselform}
+$(X, Y) :- \akte(F, X, E), \akte(F, Y, E)$ \\
+\paragraph{Typ}
+6 \\
 
-\medskip
+\bigskip
 
 ad b) \\
 
-\textbf{DRC}:\\
+\paragraph{DRC}
 $(\exists X)(\exists Y) (LTD\_ERMITTLER(X, Y))$ \\
-\textbf{Klauselform}:\\
+\paragraph{Klauselform}
 $lt\_ermittler(X, Y) :- .$\\
-\textbf{Typ}:\\
+\paragraph{Typ}
+4 \\
 
-\medskip
+\bigskip
 
 ad c) \\
 
-\textbf{DRC}:\\
-$(\exists X)(BEARBEITET('Mulder', X) \Rightarrow BEARBEITET('Scully', X)) \wedge (\exists Y)(BEARBEITET('Scully', Y) \Rightarrow BEARBEITET('Mulder', Y))$ \\
-\textbf{Klauselform}:\\
-\begin{equation}
-\begin{split}
-team(X,Y) &:- bearbeitet(X, F), bearbeitet(Y, F). \\
-team(mulder, scully) &:-.
-\end{split}
-\end{equation}
+\paragraph{DRC}
+$(\exists X)(BEARBEITET(\Mulder, X) \Rightarrow BEARBEITET(\Skully, X)) \wedge (\exists Y)(BEARBEITET(\Skully, Y) \Rightarrow BEARBEITET(\Mulder, Y))$ \\
+\paragraph{Klauselform}
+$\team(X,Y) :- \bearbeitet(X, F), \bearbeitet(Y, F).$ \\
+$\team(\Mulder, \Skully) :-.$
 
-\textbf{Typ}:\\
-
-\medskip
+\paragraph{Typ}
+4 und 6 \\
+\bigskip
 
 
 ad d) \\
 
-\textbf{DRC}:\\
-$(\forall E)(AKTE('Krycek', 'offen', E) \Rightarrow BEARBEITET('Mulder', 'Krycek'))$ \\
-\textbf{Klauselform}:\\
-$bearbeitet('Mulder', 'Krycek') :- akte('Krycek', 'offen', X)$\\
-\textbf{Typ}:\\
-	
-\medskip
+\paragraph{DRC}
+$(\forall E)(AKTE(\Krycek, \offen, E) \Rightarrow BEARBEITET(\Mulder, \Krycek))$ \\
+\paragraph{Klauselform}
+$bearbeitet(\Mulder, \Krycek) :- \akte(\Krycek, \offen, X)$\\
+\paragraph{Typ}
+6 \\
+\bigskip
 
 
 ad e) \\
 
-\textbf{DRC}:\\
-\begin{equation}
-\begin{split}
-(\forall X)(\forall Y)(\forall Z)(&ERMITTLER(X, Y) \\
-\wedge (&Y \neq Sonderermittler \wedge Y \neq Verwaltung)) \Rightarrow bearbeitet(X,Z))
-\end{split}
-\end{equation}
+\paragraph{DRC}
 
-\textbf{Klauselform}:\\
-$ermittler2 :- ermittler(X,Y), Y \neq sonderermittler, y \neq Werwaltung.$
-\textbf{Typ}:\\
+$(\forall X)(\forall Y)(\forall Z)(ERMITTLER(X, Y) \\$
+$\wedge (Y \neq \Sonderermittler \wedge Y \neq \Verwaltung)) \Rightarrow \bearbeitet(X,Z))$
 
-\medskip
+\paragraph{Klauselform}
+$ermittler2 :- \ermittler(X,Y), Y \neq \Sonderermittler, y \neq \Verwaltung.$
+\paragraph{Typ}
+4 \\
+
+\bigskip
 
 ad f) \\
 
-\textbf{DRC}:\\
-\begin{equation}
-\begin{split}
-\lnot (\forall X)(\forall Y)(\forall Z)(AKTE(X, 'gel\ddot{o}st', Y) \Rightarrow \lnot bearbeitet(X, Z))
-\end{split}
-\end{equation}
+\paragraph{DRC}
+$\lnot (\forall X)(\forall Y)(\forall Z)(AKTE(X, \geloest, Y) \Rightarrow \lnot \bearbeitet(X, Z))$
 
-\textbf{Klauselform}:\\
-$:- \lnot bearbeitet(X, Z), akte(X, 'gel\ddot{o}st', Y).$
-\textbf{Typ}:\\
-
+\paragraph{Klauselform}
+$:- \lnot \bearbeitet(X, Z), \akte(X, \geloest, Y).$
+\paragraph{Typ}
+3 \\
 \end{document}
