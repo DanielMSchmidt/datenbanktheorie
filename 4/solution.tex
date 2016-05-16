@@ -18,11 +18,16 @@
 \usepackage{german}
 
 
+\lstset{
+    frame=single,
+    breaklines=true,
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-\title{Blatt 3}
+\title{Blatt 4}
 
 \author{Daniel Schmidt \& Pamela Fleischmann}
 
@@ -104,4 +109,120 @@ ad 4) Betrachte $P=\{:-p(X)\}$. Da kein Element in der leeren Menge ist, ist die
 
 ad 5) Da $I$ ein Modell ist, sind die Grundatome in $I$ und somit auch in $I'$. Da für alle Konstanten genau die Klauseln aufgenommen werden, die auch in $I$ sind und
 $I$ ein Herbrand-Modell ist, überträgt sich die Eigenschaft auf $I'$.
+
+% TODO: Bei silbling fehlt generell noch ungleichheit
+\begin{aufgabe1}
+Geben Sie eine natürlichsprachige Definition folgender Verwandschaftsbeziehungen an, übersetzen Sie diese in reines Datalog und testen Sie Ihre Lösung mit CORAL:\\
+a) elternteil
+b) großvater
+c) schwester (incl. Halbschwester)
+d) onkel
+e) nichte
+f) vorfahre
+g) sind\_verwand
+\end{aufgabe1}
+
+ad a)
+
+Die natürlichsprachige Definition wäre ``Vater oder Mutter'', das Datalog Programm sieht entsprechend so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+end_module.
+\end{lstlisting}
+
+\medskip
+
+ad b)
+
+Die natürlichsprachige Definition wäre ``Vater oder Muter von Vater oder Mutter'', das Datalog Programm sieht dementsprechend so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+
+end_module.
+\end{lstlisting}
+
+\medskip
+
+ad c)
+
+Die natürlichsprachige Definition wäre ``Vater oder Muter von beiden Eingaben sind identisch und die zweite Eingabe (Schwester) ist weiblich'', das Datalog Programm sieht so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
+
+end_module.
+\end{lstlisting}
+
+\medskip
+
+ad d)
+
+Die natürlichsprachige Definition wäre ``Bruder oder Schwester meines Vaters oder meiner Mutter'', das Datalog Programm sieht so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
+silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
+
+end_module.
+\end{lstlisting}
+
+\medskip
+
+ad e)
+
+Die natürlichsprachige Definition wäre ``Tochter meiner Schwester oder meines Bruders'', das Datalog Programm sieht so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf), niece(ff, fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
+silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
+niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
+
+end_module.
+\end{lstlisting}
+
+\medskip
+
+ad f)
+
+\medskip
+
+ad g)
+
+\medskip
 \end{document}
