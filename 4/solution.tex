@@ -202,7 +202,7 @@ Die natürlichsprachige Definition wäre ``Tochter meiner Schwester oder meines 
 
 \begin{lstlisting}
 module serie.
-export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf), niece(ff, fb,bf).
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf), niece(ff,fb,bf).
 
 parent(X,Y) :- vater(X,Y).
 parent(X,Y) :- mutter(X,Y).
@@ -219,10 +219,53 @@ end_module.
 \medskip
 
 ad f)
+Die natürlichsprachige Definition wäre ``Ein einer vorherigen Generation angehöriger Verwandter'', das Datalog Programm sieht so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf), niece(ff,fb,bf), ancestor(ff,fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
+silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
+niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
+ancestor(X,Y) :- parent(X, Y).
+ancestor(X,Y) :- parent(X, Z), ancestor(Z,Y).
+
+end_module.
+\end{lstlisting}
 
 \medskip
 
 ad g)
+
+Die natürlichsprachige Definition ``es gibt einen gemeinsamen Vorfahren'' ist schon in der Aufgabenstellung gegeben, das Datalog Programm sähe entsprechend so aus:
+
+\begin{lstlisting}
+module serie.
+export parent(ff,fb,bf), grandparent(ff,bf,fb), sister(ff,fb,bf), uncle(ff,fb,bf), niece(ff,fb,bf), ancestor(ff,fb,bf), is_related(ff,fb,bf).
+
+parent(X,Y) :- vater(X,Y).
+parent(X,Y) :- mutter(X,Y).
+
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
+sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
+silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
+niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
+ancestor(X,Y) :- parent(X, Y).
+ancestor(X,Y) :- parent(X, Z), ancestor(Z,Y).
+
+is_related(X,Y) :- ancestor(X,Z), ancestor(Y,Z), not equal(X,Y).
+
+end_module.
+\end{lstlisting}
+
+Dementsprechend kommt dieses Beispiel nicht ohne build-in prädikate aus.
 
 \medskip
 \end{document}
