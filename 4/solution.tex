@@ -268,4 +268,28 @@ end_module.
 Dementsprechend kommt dieses Beispiel nicht ohne build-in prädikate aus.
 
 \medskip
+\begin{aufgabe1}
+\end{aufgabe1}
+
+
+Das folgende Programm setzt die Funktionaltät um:
+
+\begin{lstlisting}
+module serie.
+export d(bbb,fbb,bfb,bbf,fbf,bff).
+
+
+d(X,Y,0) :- X = Y.
+d(X,Y,Z) :- length(X,Z).
+d(X,Y,Z) :- length(Y,Z).
+
+
+d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), CX = CY, substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z).
+d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), CX != CY, substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z - 1).
+d(X,Y,Z) :- extract(X,0,CX), substr(X,CX,RX), d(RX,Y, Z-1).
+d(X,Y,Z) :- extract(Y,0,CY), substr(Y,CY,RY), d(X,RY, Z-1).
+
+end_module.
+\end{lstlisting}
+
 \end{document}
