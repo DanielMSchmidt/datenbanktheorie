@@ -110,16 +110,7 @@ ad 4) Betrachte $P=\{:-p(X)\}$. Da kein Element in der leeren Menge ist, ist die
 ad 5) Da $I$ ein Modell ist, sind die Grundatome in $I$ und somit auch in $I'$. Da für alle Konstanten genau die Klauseln aufgenommen werden, die auch in $I$ sind und
 $I$ ein Herbrand-Modell ist, überträgt sich die Eigenschaft auf $I'$.
 
-% TODO: Bei silbling fehlt generell noch ungleichheit
 \begin{aufgabe1}
-Geben Sie eine natürlichsprachige Definition folgender Verwandschaftsbeziehungen an, übersetzen Sie diese in reines Datalog und testen Sie Ihre Lösung mit CORAL:\\
-a) elternteil \\
-b) großvater \\
-c) schwester (incl. Halbschwester) \\
-d) onkel \\
-e) nichte \\
-f) vorfahre \\
-g) sind\_verwand 
 \end{aufgabe1}
 
 ad a)
@@ -188,7 +179,7 @@ parent(X,Y) :- mutter(X,Y).
 
 grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
 sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
-silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+silbling(X,Y) :- parent(Z,X), parent(Z,Y), not equal(X,Y).
 uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
 
 end_module.
@@ -209,7 +200,7 @@ parent(X,Y) :- mutter(X,Y).
 
 grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
 sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
-silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+silbling(X,Y) :- parent(Z,X), parent(Z,Y), not equal(X,Y).
 uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
 niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
 
@@ -230,7 +221,7 @@ parent(X,Y) :- mutter(X,Y).
 
 grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
 sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
-silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+silbling(X,Y) :- parent(Z,X), parent(Z,Y), not equal(X,Y).
 uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
 niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
 ancestor(X,Y) :- parent(X, Y).
@@ -239,7 +230,7 @@ ancestor(X,Y) :- parent(X, Z), ancestor(Z,Y).
 end_module.
 \end{lstlisting}
 
-\medskip
+\newpage
 
 ad g)
 
@@ -254,7 +245,7 @@ parent(X,Y) :- mutter(X,Y).
 
 grandparent(X,Z) :- parent(X,Y), parent(Y,Z).
 sister(X,Y) :- parent(Z, X), parent(Z, Y), weiblich(Y).
-silbling(X,Y) :- parent(Z,X), parent(Z, Y).
+silbling(X,Y) :- parent(Z,X), parent(Z,Y), not equal(X,Y).
 uncle(X,Y) :- parent(Z,Y), silbling(Z,X), maennlich(X).
 niece(X,Y) :- parent(Z,X), silbling(Y,Z), weiblich(X).
 ancestor(X,Y) :- parent(X, Y).
@@ -267,25 +258,25 @@ end_module.
 
 Dementsprechend kommt dieses Beispiel nicht ohne build-in prädikate aus.
 
-\medskip
+\newpage
 \begin{aufgabe1}
 \end{aufgabe1}
 
 
-Das folgende Programm setzt die Funktionaltät um:
+Das folgende Programm setzt die Funktionaltät theoretisch um, allerdings habe ich beim Ausführen Fehler erhalte, die ich leider nicht beheben konnte. Um ein sicheres Programm zu erhalten müsste jede Variable aus dem Regelkopf auch im Rumpf enthalten sein. Wie dies allerdings beispielsweise bei \texttt{d(X,Y,Z) :- length(X,Z).} umzusetzen wäre ist mir leider unklar.
 
 \begin{lstlisting}
 module serie.
-export d(bbb,fbb,bfb,bbf,fbf,bff).
+export d(bbb,bbf,bfb,bff,fbb,fbf,ffb,fff).
 
 
-d(X,Y,0) :- X = Y.
+d(X,Y,0) :- equal(X,Y).
 d(X,Y,Z) :- length(X,Z).
 d(X,Y,Z) :- length(Y,Z).
 
 
-d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), CX = CY, substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z).
-d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), CX != CY, substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z - 1).
+d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), equal(CX,CY), substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z).
+d(X,Y,Z) :- extract(X,0,CX), extract(Y,0,CY), not equal(CX,CY), substr(X,CX,RX), substr(Y,CY,RY), d(RX,RY,Z-1).
 d(X,Y,Z) :- extract(X,0,CX), substr(X,CX,RX), d(RX,Y, Z-1).
 d(X,Y,Z) :- extract(Y,0,CY), substr(Y,CY,RY), d(X,RY, Z-1).
 
