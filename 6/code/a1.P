@@ -1,0 +1,10 @@
+module serie.
+export reachable(bbbf,bbbb), connected(bbb,bbf,fbb,fbf).
+
+element_of([H|T], H).
+element_of([H|T], X) :- element_of(T, X).
+
+connected(G,S,D) :- kante(G,S,D).
+reachable(G,S,P,D) :- connected(G,S,D), equals(P,[D|T]), not element_of(T,H).
+
+end_module.
