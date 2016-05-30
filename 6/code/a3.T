@@ -1,4 +1,4 @@
-@@ l 1
-"hello"
-"world"
-"test"
+@@ l 2
+"hello" nonfinal
+"world" final
+"test" nonfinal

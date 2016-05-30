@@ -1,7 +1,7 @@
 module serie.
 export is_word(f,b).
 
-is_word(S) :- substr(S,l,R), is_word(R).
-is_word(S) :- substr(S,l,R), length(R,0).
+is_word(X) :- l(X, final).
+is_word(X) :- l(W,Z), substr(X,W,R), is_word(R).
 
 end_module.

@@ -1,10 +1,16 @@
 module serie.
-export reachable(bbbf,bbbb), connected(bbb,bbf,fbb,fbf).
+export reachable(bbbf,bbbb).
 
-element_of([H|T], H).
-element_of([H|T], X) :- element_of(T, X).
+reachable(G,S,[PH|PT],D) :- kante(G,S,D,PH).
+reachable(G,S,[PH|PT],D) :- kante(G,S,X,PH), reachable(G,X,PT,D).
 
-connected(G,S,D) :- kante(G,S,D).
-reachable(G,S,P,D) :- connected(G,S,D), equals(P,[D|T]), not element_of(T,H).
+// "x"(?) macht ein Zeichen
+reachable(G,S,["x"|PT],D) :- kante(G,S,D,_).
+reachable(G,S,["x"|PT],D) :-  kante(G,S,X,_), reachable(G,X,PT,D).
+
+// "y"(*) macht beliebig viele Zeichen
+reachable(G,S,["y"|PT],D) :- kante(G,S,D,_).
+reachable(G,S,["y"|PT],D) :-  kante(G,S,X,_), reachable(G,X,PT,D).
+reachable(G,S,["y"|PT],D) :-  kante(G,S,X,_), reachable(G,X,["y"|PT],D).
 
 end_module.

@@ -17,6 +17,7 @@
 \usepackage{graphicx}
 \usepackage{german}
 
+\lstset{basicstyle=\small}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -29,6 +30,52 @@
 \maketitle
 
 \begin{aufgabe1}
+
+Die Methode \texttt{reachable} lässt sich wie folgt implementieren: \\
+
+\lstinputlisting{code/a1.P}
+
+Ein Aufruf würde beispielsweise so aussehen: \\
+
+\begin{lstlisting}
+ready>>consult(kante.T).
+ready>>consult(a1.P).
+ready>>reachable(g1, "A", ["y"], Z).
+CORAL::error : Not in insert mode !
+ready>>?reachable(g1, "A", ["y"], Z).
+Z="B".
+        ... next answer ? (y/n/all)[y]
+y
+Z="K".
+        ... next answer ? (y/n/all)[y]y
+Z="C".
+        ... next answer ? (y/n/all)[y]y
+Z="D".
+        ... next answer ? (y/n/all)[y]y
+Z="E".
+        ... next answer ? (y/n/all)[y]y
+Z="L".
+        ... next answer ? (y/n/all)[y]y
+Z="F".
+        ... next answer ? (y/n/all)[y]y
+Z="G".
+        ... next answer ? (y/n/all)[y]y
+Z="J".
+        ... next answer ? (y/n/all)[y]all
+Z="I".
+Z="H".
+(Number of Answers = 11)
+ready>>?reachable(g1, "A", [1,1], Z).
+Z="B".
+        ... next answer ? (y/n/all)[y]y
+Z="K".
+        ... next answer ? (y/n/all)[y]y
+Z="D".
+        ... next answer ? (y/n/all)[y]y
+Z="E".
+        ... next answer ? (y/n/all)[y]y
+(Number of Answers = 4)
+\end{lstlisting}
 
 \end{aufgabe1}
 
