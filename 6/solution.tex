@@ -105,26 +105,18 @@ ist nicht nötig, da im Rumpf der Regeln keine neuen Variablen eingeführt werde
 
 
 \begin{aufgabe1}
-\begin{verbatim}
-dfa(L) :- start(S), transition(S,L).
+Das Programm sieht so aus:
+\lstinputlisting[caption=a3.P]{code/a3.P}
 
-trans(S1,[A|W]) :- delta(S1,A,S2), transition(S2,W).  
-trans(S1,[]) :- final(S1).
+Die zugehörtige Table file die zuerst importiert werden muss so:
+\lstinputlisting[caption=a3.T]{code/a3.T}
 
-start(0).
-final(3).
-delta(0,a,1).   
-delta(0,b,2).
-delta(1,a,2).
-delta(1,b,0).
-delta(2,a,2).
-delta(2,b,2).
-delta(3,a,4).
-delta(3,b,2).
-delta(4,a,2).
-delta(4,b,0).
-\end{verbatim}
-$L=(ab)^{\ast}ab(ab)^{\ast}$
+Die Sprache ist definiert als: $L=hello(hello | test | world)^{\ast}world$ (wobei das ``|'' Symbol für oder steht).
+
+Eine Ausgabe dieses Programms ist hier zu sehen:
+
+\lstinputlisting[caption=a3.log]{code/a3.log}
+
 \end{aufgabe1}
 
 \end{document}
