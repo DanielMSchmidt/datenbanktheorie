@@ -1,0 +1,11 @@
+module flounder_example.
+export notintoys(f).
+
+person(john).
+person(susan).
+
+employed(susan,marketing).
+
+notintoys(X) :- person(X), Y = toys, not employed(X,Y).
+
+end_module. 

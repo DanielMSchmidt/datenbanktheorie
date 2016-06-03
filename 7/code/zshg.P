@@ -1,0 +1,26 @@
+module serie.
+export zshg(bf,bb).
+
+zshg(G, Y) :- allNodes(G, LA), allConnectedNodes(G,LC), sameLength(LA, LC).
+
+sameLength(LA, LC) :- length(LA, LLA), length(LC, LLC), equal(LLA, LLC).
+
+connected(K1, K2) :- equal(K1, K2).
+connected(K1, K2) :- kante(K1, K2).
+connected(K1, K2) :- kante(K2, K1).
+
+path(K1, K2) :- connected(K1, K2).
+path(K1, K3) :- connected(K1, K2), connected(K2, K3), not equal(K1, K3), not equal(K1, K2), not equal(K2, K3).
+
+allNodes(G, []).
+allNodes(G, [H|T]) :- node(G, H), not member(H, T).
+
+reachableNodes(G, X, []).
+reachableNodes(G, X, [H|T]) :- node(G, H), connected(X, H), not member(H, T).
+
+canReachAllNodes(G, X) :- 
+
+allConnectedNodes(G, []).
+allConnectedNodes(G, [H|T]) :- node(G, H), not member(H, T), reachableNodes(G, H, L), allNodes(G, L2), sameLength(L, L2).
+
+end_module.

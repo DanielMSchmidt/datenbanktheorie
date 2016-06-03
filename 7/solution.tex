@@ -29,5 +29,61 @@
 
 \maketitle
 
+\begin{aufgabe1}
+Sei das folgende Datalog-Programm gegeben:
+
+\begin{align*}
+&gn(X,Y) :- gl(X,Y). \\
+&gn(X,Y) :- kp(X,X1), gn(Y1,X1), kp(Y,Y1).
+\end{align*}
+
+und die Zielklausel $? - gn(c,Y).$
+
+\paragraph{Schritt 1:}
+Es gilt die Regel $query^{f}(Y) :- gn^{bf}(c,Y).$ einzufügen, womit das komplette Programm wie folgt lautet: 
+\begin{align*}
+&r_0 = query^{f}(Y) :- gn^{bf}(c,Y). \\
+&r_1 = gn^{bb}(X,Y) :- gl^{ff}(X,Y). \\
+&r_2 = gn^{bb}(X,Y) :- kp^{ff}(X,X1), gn^{ff}(Y1,X1), kp^{ff}(Y,Y1).
+\end{align*}
+
+\paragraph{Schritt 2:}
+Als nächstes müssen alle Vorkommen von IDB-Prädikaten im Rumpf verändert werden, in diesem Fall ist $r_2$, sodass sich folgende Regeln ergeben: 
+
+\begin{align*}
+&magic\_r_0\_gn^{bf} :- . \\
+&magic\_r_2\_gn^{bb} :- kp^{ff}(X,X1), &magic\_r_2\_gn^{bb}(X1,Y1), kp^{ff}(Y,Y1).
+\end{align*}
+
+\end{aufgabe1}
+
+
+\begin{aufgabe1}
+\end{aufgabe1}
+
+\begin{aufgabe1}
+\end{aufgabe1}
+
+\begin{aufgabe1}
+ad a.
+
+Die Ausgaben des Original Programms sind wie folgt:
+\lstinputlisting{code/a4Before.log}
+
+Folgene Anpassungen an das Programm waren notwendig:
+\lstinputlisting{code/flounder.P}
+
+Die resultierende Ausgabe ist die folgende:
+\lstinputlisting{code/a4After.log}
+
+ad b.
+
+Das Programm sieht wie folgt aus:
+\lstinputlisting{code/zshg.P}
+
+Die folgende Ausgabe wird erzeugt:
+\lstinputlisting{code/zshg.log}
+
+\end{aufgabe1}
 
 \end{document}
