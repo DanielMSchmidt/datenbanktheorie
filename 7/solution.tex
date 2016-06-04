@@ -59,9 +59,63 @@ Als nächstes müssen alle Vorkommen von IDB-Prädikaten im Rumpf verändert wer
 
 
 \begin{aufgabe1}
+a. Betrachte das Datalog-Programm
+\[
+p(a).\,q(X):-\lnot p(X).
+\]
+Herbrand-Modelle für dieses Programm sind $\{p(a)\}$, $\{p(a),q(b)\}$ und $\{p(a),q(a),q(b)\}$. $r(x,y)$ kann außerdem immer mit dazugenommen werden, da es in der Regel nicht vorkommt. Die Variable $X$ ist unbeschränkt, da sie nicht-negiert nur im Kopf vorkommt. Desweiteren ist $p$ geschichtet, da es im Abhängigkeitsgraphen keinen Zyklus gibt.
+
+\medskip
+
+b. Betrachte das Datalog-Programm
+\[
+p(X):-\lnot q(X).\,q(X):-\lnot p(X).
+\]
+Herbrand-Modelle sind $\{q(a),q(b)\}$, $\{p(a),p(b)\}$, $\{q(a),p(b)\}$ und $\{q(b)$, $p(a)\}$. Analog zu a. kann $r$ in allen Varianten wieder dazugenommen werden. $X$ ist in beiden Regeln unbeschränkt. Das Programm ist nicht geschichtet, da der Abhängigkeitsgraph einen Zyklus mit einer mit $\lnot$ beschrifteten Kante enthält.
+
+\medskip
+
+c. Betrachte das Datalog-Programm
+\[
+p(X):-\lnot q(X).\,q(X):-p(X).
+\]
+Herbrand-Modell ist $\{p(a),q(a),p(b),q(b)\}$ und wieder kann $r$ in allen Varianten dazugenommen werden. $X$ ist in Regel 1 unbeschränkt, in Regel 2 dagegen beschränkt, da sie im Kopf und im Rumpf nicht-negiert vorkommt. Analog zu b. ist $P$ nicht geschichtet.
+
+\medskip
+
+d. Betrachte das Datalog-Programm
+\[
+p(a).\,q(b).\,r(X,Y):-\lnot p(X),\lnot q(Y).
+\]
+Herbrand-Modelle sind $\{p(a),q(b),r(b,a)\}$, $\{p(a),q(b),p(b)\}$, $\{p(a)$, $q(b)$, $q(a)\}$. Beide Variablen sind unbeschränkt, da sie im Rumpf nur negiert vorkommen. Da es keinen Zyklus im Abhängigkeitsgraphen gibt, ist das Programm geschichtet.
+
+\medskip
+
+e. Betrachte das Datalog-Programm
+\[
+p(a).\,q(b).\,r(X,Y):-p(X),q(Y),\lnot p(X).
+\]
+Ein Herbrand Modell ist $\{p(a),q(b)\}$. Da der Rumpf nie erfüllt ist, können alle Varianten von $r$ in das Modell mit aufgenommen werden. Die Variable $X$ ist unbeschränkt, die Variable $Y$ ist beschränkt. Das Programm ist geschichtet, da es keinen Zyklus gibt.
 \end{aufgabe1}
 
+\medskip
+
 \begin{aufgabe1}
+Betrachte das folgende Datalog-Programm mit Negation
+\begin{equation*}
+\begin{split}
+ p(a,b).&\,p(b,c).\,p(b,a).\,p(c,d).\,p(c.c).\\
+ q(X,Y) &:- p(X,Y),\lnot p(Y,X).\\
+ q(X,X) &:- -q(X,Y).\\
+ r(X,Y)&:-\lnot q(Y,X),p(X,Y),\lnot p(X,X).\\
+ r(Y,Y)&:-r(X,Y).\\
+ s(X,X) &:- \lnot r(X,Y),p(X,Z),p(W,Y).
+ \end{split}
+\end{equation*}
+Für ein perfektes Modell wird die Schichtung betrachtet und somit zuerst das Prädikat $q$. Mit der ersten Regel kommen $q(c,b)$ und $q(d,c)$ hinzu. Mit der zweiten dann
+$q(c,c),q(b,b),q(d,d)$. Da $r$ von $p$ und $q$ abhängt, ist $r$ in der folgenden Schicht und es werden $r(a,b)$ und $r(b,a)$ durch Regel 3, sowie $r(b,b)$ und $r(a,a)$ durch
+Regel 4 hinzugenommen. Da $s$ nicht von $r$ abhängt, ist $s$ in derselben Schicht und es kommen die Fakten $s(a,a), s(b,b),s(c,c)$ hinzu. Da in keiner Regel, die weiter unten
+steht, Elemente der oberen Schichten verändert werden, ist dies das perfekte Modell.
 \end{aufgabe1}
 
 \begin{aufgabe1}
@@ -75,6 +129,8 @@ Folgene Anpassungen an das Programm waren notwendig:
 
 Die resultierende Ausgabe ist die folgende:
 \lstinputlisting{code/a4After.log}
+
+\medskip
 
 ad b.
 
