@@ -40,20 +40,49 @@ Sei das folgende Datalog-Programm gegeben:
 und die Zielklausel $? - gn(c,Y).$
 
 \paragraph{Schritt 1:}
-Es gilt die Regel $query^{f}(Y) :- gn^{bf}(c,Y).$ einzufügen, womit das komplette Programm wie folgt lautet: 
 \begin{align*}
 &r_0 = query^{f}(Y) :- gn^{bf}(c,Y). \\
-&r_1 = gn^{bb}(X,Y) :- gl^{ff}(X,Y). \\
-&r_2 = gn^{bb}(X,Y) :- kp^{ff}(X,X1), gn^{ff}(Y1,X1), kp^{ff}(Y,Y1).
+&r_1 = gn^{bb}(X,Y) :- gl(X,Y). \\
+&r_2 = gn^{bf}(X,Y) :- kp(X,X1), gn^{bb}(Y1,X1), kp(Y,Y1). \\
+&r_3 = gn^{fb}(X,Y) :- kp(X,X1), gn^{bb}(Y1,X1), kp(Y,Y1).
 \end{align*}
 
 \paragraph{Schritt 2:}
-Als nächstes müssen alle Vorkommen von IDB-Prädikaten im Rumpf verändert werden, in diesem Fall ist $r_2$, sodass sich folgende Regeln ergeben: 
 
 \begin{align*}
-&magic\_r_0\_gn^{bf} :- . \\
-&magic\_r_2\_gn^{bb} :- kp^{ff}(X,X1), &magic\_r_2\_gn^{bb}(X1,Y1), kp^{ff}(Y,Y1).
+&magic\_r_0\_gn^{bf}(c) :- . \\
+&magic\_r_2\_gn^{fb}(Y) :- gn^{bb}(Y1,X1), kp(Y,Y1). \\
+&magic\_r_3\_gn^{bf}(X) :- kp(X,X1), gn^{bb}(Y1,X1).
 \end{align*}
+
+\paragraph{Schritt 3:}
+
+\begin{align*}
+&query^{f}(Y) :- magic\_r_0\_gn^{bf}(c), gn^{bf}(c,Y). \\
+&gn^{bf}(X,Y) :- gl^{bf}(X,Y). \\
+&gn^{bf}(X,Y) :- magic\_r_2\_gn^{fb}(Y), gn^{bf}(Y1,X1), kp(Y,Y1). \\
+&gn^{fb}(X,Y) :- magic\_r_3\_gn^{bf}(X), kp(X,X1), gn^{fb}(Y1,X1).
+\end{align*}
+
+\paragraph{Schritt 4:}
+
+\begin{align*}
+&magic\_gn^{bf}(c) :- magic\_r_0\_gn^{bf}(c). \\
+&magic\_gn^{bf}(X) :- magic\_r_3\_gn^{bf}(X). \\
+&magic\_gn^{fb}(Y) :- magic\_r_2\_gn^{fb}(Y). 
+\end{align*}
+
+\paragraph{Resultat:}
+\begin{align*}
+&query^{f}(Y) :- magic\_gn^{bf}(c), gn^{bf}(c,Y). \\
+&magic\_gn^{bf}(c) :- magic\_r_0\_gn^{bf}(c). \\
+&magic\_gn^{bf}(X) :- magic\_r_3\_gn^{bf}(X). \\
+&magic\_gn^{fb}(Y) :- magic\_r_2\_gn^{fb}(Y). \\
+&gn^{bf}(X,Y) :- gl^{bf}(X,Y). \\
+&gn^{bf}(X,Y) :- magic\_gn^{fb}(Y), gn^{bf}(Y1,X1), kp(Y,Y1). \\
+&gn^{fb}(X,Y) :- magic\_gn^{bf}(X), kp(X,X1), gn^{fb}(Y1,X1).
+\end{align*}
+
 
 \end{aufgabe1}
 
