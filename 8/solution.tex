@@ -43,6 +43,14 @@ ad. a
 
 ad. b
 
+Um das Ergebnis zu beschleunigen muss die Gesamtmenge der Resultate in einem möglichst frühen Schritt eingeschränkt werden. Dies wäre möglich wenn man mehrere \texttt{WITH} statements miteinander kombiniert, sodass es mehrere Instanzen von Reise gibt, Reise-1, Reise-2, Reise-3 \& Reise-4. Die Indizes würden hierbei genau darlegen wie viele Fahrten in einer Reise enthalten ist. Der Vorteil hierbei wäre, wie in der folgenden Abbildung beispielsweise in den Zeilen 37-40 zu sehen ist, dass man in den rekursiven Selects eine \texttt{NOT EXISTS} Abfrage auf eine günstigere und zugleich schnellere Verbindung abfragen kann, ohne einen Reference Error zu bekommen. Hierdurch lässt sich die Ergebnismenge früh beschränken und zu teure / langsame Lösungen werden nicht weiter verfolgt.  \\
+
+\lstinputlisting[breaklines=true,language=SQL,numbers=left]{code/a2b.sql}
+
+Da diese Lösung jedoch die Rekursion aus der Aufgabe nimmt gehe ich davon aus, dass man eine ähnliche Query auch rekursiv hinbekommen könnte, allerdings habe ich das leider nicht geschaftt. Aus diesem Grund habe ich mir auch den (sehr langen) Aufschrieb der kompletten Anfrage gespart, ich denke die Grundidee ist auch so klar geworden.
+
+
+
 \end{aufgabe1}
 
 \begin{aufgabe1}
