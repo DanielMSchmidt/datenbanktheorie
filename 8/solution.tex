@@ -54,6 +54,10 @@ Da diese Lösung jedoch die Rekursion aus der Aufgabe nimmt gehe ich davon aus, 
 \end{aufgabe1}
 
 \begin{aufgabe1}
+
+Der Except-Operator in der Query sorgt dafür, dass gewisse Tupel nicht mit ins (Zwischen)Ergebnis aufgenommen werden. Er exkludiert somit Tupel. Die einzige andere Alternative um Tupel aus einer Menge von Kandidaten auszuschließen, ist der NOT-Operator. Da sich dies nicht nur speziell auf die vorgebene Query bezieht, sei sich hier auf Relationstypen R und S beschränkt und der Teil R\S der Query. Nach Definition sind also genau die Tupel gewünscht, die sich in R aber nicht in S befinden.
+Eine Umformulierung der Query kann also die Gestalt haben, dass mit SELECT * FROM R alle Tupel aus R genommen werden und dann im WHERE-Teil mittels NOT EXISTS genau die Tupel aus S entfernt werden, die auch in R sind. Damit bleiben die Tupel übrig, die gerade in $R \backslash S$ sind.
+
 \end{aufgabe1}
 
 \end{document}
