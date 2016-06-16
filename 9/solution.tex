@@ -31,9 +31,37 @@
 
 \begin{aufgabe1}
 Um zu zeigen, dass Datalog ohne Rekursion, aber mit Negation und sicheren Regeln die gleiche Ausdruckskraft wie die Relationenalgebra hat muss gezeigt werden, dass $\mu(L) = \mu'(L')$ gilt, wobei Datalog als $(L, \mu)$ definiert ist und die Relationenalgebra $(L', \mu')$ ist.
-Hierzu gilt zu zeigen, dass für ein beliebiges Datenbankschema $\sigma$ gilt
+Hierzu gilt zu zeigen, dass dies für ein beliebiges Datenbankschema $\sigma$ gilt.
+Also müssen folgende Aussagen gezeigt werden:
 
+\begin{align*}
+1) &\forall e' \in L': \exists e \in L: \mu'(e') = \mu(e) \\
+2) &\forall e \in L: \exists e' \in L': \mu(e) = \mu'(e')
+\end{align*}
 
+Diese werden nun einzelnd gezeigt:
+
+\paragraph{1)}
+
+Um zu zeigen, dass jeder Ausdruck der in der Relationenalgebra in einen bedeutungsgleichen Ausdruck in Datalog umgeformt werden kann muss lediglich gezeigt werden, dass die einzelnen Konzepte jeweils ausgedrückt werden können. Die Zusammensetzung dieser ist implizit durch die Zusammensetzbarkeit der Ausdrücke gegeben. Seien $e$ und $e'$ im Folgenden Ausdrücke der Relationenalgebra.
+
+\paragraph{Selektion}
+Sei $e = e'[es_1, \cdots, es_n]$ mit $n > 0$ und $es_i$ Vergleichsausdrücke mit $0 < i \le n$.
+Dann lässt sich $e$ in Datalog als $e''(V) :- e'(V), es_1(V), \cdots, es_n(V)$ ausdrücken, wobei V die Liste der Argumente, bzw. die Spalten der Tabelle sind; Beide Aussagen sind äquivalent.
+
+\paragraph{Umbenennung}
+Sei $V$ die Menge aller Spalten in $e$ und $V'$ die Menge aller Spalten in $e[k \rightarrow j]$, so gilt $k \in V \wedge k \not \in V' \wedge j \not \in V \wedge j \in V'$. Dann lässt sich die Umbenennung darstellen als $e''(V) :- e(V').$.
+
+\paragraph{Projektion}
+Eine Projektion lässt sich analog zur Umbenennung umsetzen, allerdings muss hierbei die Menge $V'$ so gewählt werden, dass jedes $k \in V$ durch ein $``\_''$ ersetzt wird das nicht in der Menge der erlaubten Felder enthalten ist.
+
+\paragraph{Kartesisches Produkt}
+\paragraph{Vereinigung}
+\paragraph{Differenz}
+
+Mehr Operation müssen nicht gezeigt werden nach Satz 2.1, daher ist diese Richtung ausreichend bewiesen.
+
+\paragraph{2)}
 
 \end{aufgabe1}
 
