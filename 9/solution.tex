@@ -1,0 +1,68 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\synctex = 1
+
+\input{alphabets}
+\input{commands}
+\input{environments}
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{nicefrac}
+\usepackage{listings}
+\usepackage{pictex}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{german}
+
+\lstset{basicstyle=\small}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Blatt 9}
+
+\author{Daniel Schmidt \& Pamela Fleischmann}
+
+\maketitle
+
+\begin{aufgabe1}
+Um zu zeigen, dass Datalog ohne Rekursion, aber mit Negation und sicheren Regeln die gleiche Ausdruckskraft wie die Relationenalgebra hat muss gezeigt werden, dass $\mu(L) = \mu'(L')$ gilt, wobei Datalog als $(L, \mu)$ definiert ist und die Relationenalgebra $(L', \mu')$ ist.
+Hierzu gilt zu zeigen, dass für ein beliebiges Datenbankschema $\sigma$ gilt
+
+
+
+\end{aufgabe1}
+
+
+\begin{aufgabe1}
+ad. a)
+
+Die äquivalente Darstellung in Prolog ist
+
+\begin{lstlisting}
+a(A,B) :- R(A,B,_).
+a(A,B) :- S(A,D), T(_,D,B).
+\end{lstlisting}
+
+ad. b)
+
+Die äquivalente Darstellung in Prolog ist
+
+
+\begin{lstlisting}
+sbt(A,B,C,G) :- S(A,C), T(B,C,G).
+r'(A,B,C) :- R(A,B,C), A > B.
+r'(A,B,C) :- R(A,B,C), C > 5.
+rbs(A,B,C,G) :- r'(A,B,C), S(A,G).
+q(A,B,C,G) :- sbt(A,B,C,G), not rbs(A,B,C,G).
+\end{lstlisting}
+\end{aufgabe1}
+
+\begin{aufgabe1}
+\end{aufgabe1}
+
+\end{document}
