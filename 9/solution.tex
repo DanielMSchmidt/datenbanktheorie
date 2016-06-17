@@ -80,6 +80,34 @@ Weitere Operationen müssen nach Satz 2.1 nicht gezeigt werden, daher ist diese 
 
 \paragraph{2)}
 
+Analog zu 1) muss gezeigt werden, dass es zu jeder Operation in Datalog eine äquivalente in der Relationenalgebra gibt. Hierzu seien $e_{Dat}$ und $e_{Dat}'$ im Folgenden Ausdrücke in Datalog; Seien $e_{Rel}$ und $e_{Rel}'$ bereits überführte Ausdrücke der Relationenalgebra und $e_{Rel}''$ der durch die Umformung entstehende Ausdruck. \\
+
+
+\paragraph{\textbf{Fakt}}
+Fakten in Datalog lassen sich über das Konzept des Datenbankzustands in der Relationenalgebra abbilden, ist ein Fakt gegeben, so ist ein Eintrag in der entsprechenden Datenbanktabelle gegeben.\\
+
+\paragraph{\textbf{Und}}
+Wie in Teil 1) zu sehen wird ``und'' bei diversen Operationen benötigt, somit sind auf der Rückrichtung ebenfalls diverse Fälle möglich. Hierbei lässt es sich am einfachsten anhand der Parametermenge $V$ von $e_{Dat}$ und $V'$ von $e_{Dat}'$ in der Regel $e_{Dat}'' :- e_{Dat}, e_{Dat}'$ unterscheiden:
+
+\begin{enumerate}
+\item $V = V'$: In diesem Fall handelt es sich um einen Schnitt von $e_{Rel}$ udn $e_{Rel}'$ in der Relationenalgebra.
+\item $V \cap V' = \emptyset$: Da beide Mengen disjunkt sind handelt es sich um ein kartesisches Produkt in der Relationenalgebra, was wie in 1) gezeigt eine äquivalente Darstellung ist.
+\item sonst: Da beide Mengen weder gleich noch disjunkt sind handelt es sich um ein Join, welches wie bereits gezeigt durch ein kartesisches Produkt und eine Selektion dargestellt werden kann.
+\end{enumerate}
+
+\paragraph{\textbf{Oder}}
+Dies wurde bereits unter 1) - Vereinigung gezeigt.
+
+\paragraph{\textbf{Geänderte Variablenbezeichnungen im Regelkopf}}
+Dies wurde bereits unter 1) - Umbenennung, Projektion gezeigt.
+
+\paragraph{\textbf{Vergleichsausdrücke}}
+Dies wurde bereits unter 1) - Selektion gezeigt. 
+
+\paragraph{\textbf{Not}}
+% Bin mir hier unsicher
+Not lässt sich danke Closed World Assumption umschreiben als $(Tab_e \backslash e)[V]$, wobei $Tab_e$ das kartesische Produkt aller in e vorkommenden extensionale Prädikate beschreibt und $V$ die im Regelkopf von e verwendeten Variablen.
+
 \end{aufgabe1}
 
 
