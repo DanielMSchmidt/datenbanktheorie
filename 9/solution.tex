@@ -43,23 +43,40 @@ Diese werden nun einzelnd gezeigt:
 
 \paragraph{1)}
 
-Um zu zeigen, dass jeder Ausdruck der in der Relationenalgebra in einen bedeutungsgleichen Ausdruck in Datalog umgeformt werden kann muss lediglich gezeigt werden, dass die einzelnen Konzepte jeweils ausgedrückt werden können. Die Zusammensetzung dieser ist implizit durch die Zusammensetzbarkeit der Ausdrücke gegeben. Seien $e$ und $e'$ im Folgenden Ausdrücke der Relationenalgebra.
+Um zu zeigen, dass jeder Ausdruck der in der Relationenalgebra in einen bedeutungsgleichen Ausdruck in Datalog umgeformt werden kann muss lediglich gezeigt werden, dass die einzelnen Konzepte jeweils ausgedrückt werden können. Die Zusammensetzung dieser ist implizit durch die Zusammensetzbarkeit der Ausdrücke gegeben. Seien $e_{Rel}$ und $e_{Rel}'$ im Folgenden Ausdrücke der Relationenalgebra; Seien $e_{Dat}$ und $e_{Dat}'$ bereits überführte Datalog Regeln und $e_{Dat}''$ die durch die Umformung entstehende Regel. \\
 
-\paragraph{Selektion}
-Sei $e = e'[es_1, \cdots, es_n]$ mit $n > 0$ und $es_i$ Vergleichsausdrücke mit $0 < i \le n$.
-Dann lässt sich $e$ in Datalog als $e''(V) :- e'(V), es_1(V), \cdots, es_n(V)$ ausdrücken, wobei V die Liste der Argumente, bzw. die Spalten der Tabelle sind; Beide Aussagen sind äquivalent.
+\paragraph{\textbf{Selektion}}
+Sei $e_{Rel} = e_{Rel}'[es_1, \cdots, es_n]$ mit $n > 0$ und $es_i$ Vergleichsausdrücke mit $0 < i \le n$.
+Dann lässt sich $e$ in Datalog als $e_{Dat}''(V) :- e_{Dat}'(V), es_1(V), \cdots, es_n(V)$ ausdrücken, wobei V die Liste der Argumente, bzw. die Spalten der Tabelle sind; Beide Aussagen sind äquivalent. \\
 
-\paragraph{Umbenennung}
-Sei $V$ die Menge aller Spalten in $e$ und $V'$ die Menge aller Spalten in $e[k \rightarrow j]$, so gilt $k \in V \wedge k \not \in V' \wedge j \not \in V \wedge j \in V'$. Dann lässt sich die Umbenennung darstellen als $e''(V) :- e(V').$.
+\paragraph{\textbf{Umbenennung}}
+Sei $V$ die Liste aller Spalten in $e_{Rel}$ und $V'$ die Liste aller Spalten in $e_{Rel}[k \rightarrow j]$, so gilt $k \in V \wedge k \not \in V' \wedge j \not \in V \wedge j \in V'$. Dann lässt sich die Umbenennung darstellen als $e_{Dat}''(V) :- e_{Dat}(V').$. \\
 
-\paragraph{Projektion}
-Eine Projektion lässt sich analog zur Umbenennung umsetzen, allerdings muss hierbei die Menge $V'$ so gewählt werden, dass jedes $k \in V$ durch ein $``\_''$ ersetzt wird das nicht in der Menge der erlaubten Felder enthalten ist.
+\paragraph{\textbf{Projektion}}
+Eine Projektion lässt sich analog zur Umbenennung umsetzen, allerdings muss hierbei die Menge $V'$ so gewählt werden, dass jedes $k \in V$ durch ein $``\_''$ ersetzt wird das nicht in der Menge der erlaubten Felder enthalten ist. \\
 
-\paragraph{Kartesisches Produkt}
-\paragraph{Vereinigung}
-\paragraph{Differenz}
+\paragraph{\textbf{Kartesisches Produkt}}
+Sei der Ausdruck $e''_{Rel} = e_{Rel} \times e_{Rel}'$ gegeben. 
+Seien die Parameter $Param_{e_{Rel}}, Param_{e_{Rel}'}, Param_{e_{Rel}''}$ wie folgt definiert: \\
+Sei $Param_{e_{Rel}}$ gegeben als alle Spalten im Resultat von $e$ und $Param_{e_{Rel}'}$ als allen Spalten im Resultat von $e'$. Dann ist $Param_{e_{Rel}''}$ zu definieren als Liste von Parametern $x_1, \cdots x_n, y_1, \cdots, y_m$ mit $n = |Param_{e_{Rel}}|, \quad m = |Param_{e_{Rel}'}|, \quad x_i \in Param_{e_{Rel}} \text { für } 1 \le i \le n, \quad y_i \in Param_{e_{Rel}'} \text { für } 1 \le i \le m$. \\
+In Prolog lässt sich das kartesische Produkt dann durch \\ $e_{Dat}''(Param_{e''}) :- e_{Dat}(Param_{e})), e_{Dat}'(Param_{e'}))$ ausdrücken. \\
 
-Mehr Operation müssen nicht gezeigt werden nach Satz 2.1, daher ist diese Richtung ausreichend bewiesen.
+\paragraph{\textbf{Differenz}}
+Sei der Ausdruck $e''_{Rel} = e_{Rel} \backslash e_{Rel}'$ gegeben. Sei der Parameter $Param_{e_{Rel}}$ definiert als alle Spalten im Resultat von $e_{Rel}$, \footnote{Äquivalent zu allen Spalten im Resultat von $e_{Rel}'$ und allen Ergebnisspalten} so lässt sich die Differenz definieren als Regel \\
+
+\begin{lstlisting}[escapeinside={(*}{*)}]
+(*$e_{Dat}''(Param_e)$*) :- (*$e(Param_e)$*), not (*$e'(Param_e)$*).
+\end{lstlisting}
+
+\paragraph{\textbf{Vereinigung}}
+Sei der Ausdruck $e''_{Rel} = e_{Rel} \cup e_{Rel}'$ gegeben und V die Liste aller Spalten in $e_{Rel}$ und damit auch in $e_{Rel}'$, so ist die äquivale Datalog Regel gegeben als:
+
+\begin{lstlisting}[escapeinside={(*}{*)}]
+(*$e_{Dat}''$*)(V) :- (*$e_{Dat}'(V)$*).
+(*$e_{Dat}''$*)(V) :- (*$e_{Dat}(V)$*).
+\end{lstlisting}
+
+Weitere Operationen müssen nach Satz 2.1 nicht gezeigt werden, daher ist diese Richtung ausreichend bewiesen.
 
 \paragraph{2)}
 
