@@ -6,6 +6,9 @@
 \input{commands}
 \input{environments}
 
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\vga}{vga}
+
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage{wasysym}
@@ -136,6 +139,111 @@ q(A,B,C,G) :- sbt(A,B,C,G), not rbs(A,B,C,G).
 \end{aufgabe1}
 
 \begin{aufgabe1}
+Zu einem Schema $\sigma$ und einem zu $\sigma$ passenden Ausdruck der Relationenalgebra existiert ein äquivalenter zu $\sigma$ passender Ausdruck der Relationenalgebra,
+der als Operatoren nur die Vereinigung, die Differenz, die Selektion mit einfachen Vergleichsausdrücken, die Projektion, die Umbenennung und das kartesische Produkt enthält,
+sowie als Operationen nur Relationstypbezeichner aus $\sigma$ und konstante DB-Relationen der Form $\{(A:c)\}$.
 \end{aufgabe1}
 
+\medskip
+
+{\em Beweis.}
+Seien $R$ und $S$ Relationstypen über einer Attributmenge $\alpha$. Definiere
+\begin{equation*}
+\begin{split}
+R\cup S & := \{t\in T_{\alpha}|\,t\in R\lor t\in S\},\\
+R\cap S & := \{t\in T_{\alpha}|\,t\in R\land t\in S\},\\
+R\backslash S &:= \{t\in T_{\alpha}|\,t\in R\land t\not\in S\},\\
+R[\beta] &:= \{t|_{\beta}|\,t\in R\}.
+\end{split}
+\end{equation*}
+Sei $\vga$ ein Vergleichsausdruck und $R$ ein Relationstyp über $\alpha$. $t\models\vga$ bezeichne, dass ein Tupel $t$ den Vergleichsausdruck $\vga$ erfüllt (Auswerten des Tupels an den Stellen der Attributbezeichner). Definiere
+\[
+R[\vga] := \{t\in R|\,t\models\vga\}.
+\]
+Seien nun $R$ und $S$ Relationstypbezeichner über $\beta$ resp. $\gamma$ mit $\beta,\gamma\subseteq \alpha$ für eine Attributmenge $\alpha$. Definiere
+\[
+R\Join S := \{t\in T_{\beta\cup\gamma}|\,t|_{\beta}\in R\land t|_{\gamma}\in S\}.
+\]
+Gilt $\beta\cap\gamma=\emptyset$, so schreibe $R\times S$ statt $R\Join S$. Betrachte nun $\alpha'\subseteq\alpha$ mit $\alpha''=\{A_1,\dots,A_k\}\subseteq\alpha'$ und
+$\{B_1,\dots,B_k\}\cap\alpha'=\emptyset$ mit $\dom(B_i)=\dom(A_i)$ für alle $i\in[k]$ (hierdurch wird sichergestellt, dass in neue Attribute umbenannt wird). Definiere für $t\in T_{\alpha'}$
+\begin{multline*}
+t[A_1\rightarrow B_1,\dots,A_k\rightarrow B_k]=:s \\
+\Leftrightarrow (\forall i\in[k]:\,s[B_i]=t[A_i])\land t|_{\alpha'\backslash \alpha''}=s|_{\alpha'\backslash\alpha''}.
+\end{multline*}
+Darauf aufbauend sei
+\[
+R[A_1\rightarrow B_1,\dots, A_k\rightarrow B_k] := \{t[A_1\rightarrow B_1,\dots,A_k\rightarrow B_k]|\,t\in R\}.
+\]
+Betrachte nun wieder Relationstypen $R$ und $S$ über den Attributmengen $\beta$ resp. $\gamma$ mit $\beta,\gamma\neq \emptyset$. Für $S\neq\emptyset$ setze
+\[
+R\div S := \{t\in T_{\beta\backslash\gamma}|\,\forall s\in S\exists r\in R:\,r|_{\beta\backslash\gamma}=t\land r|_{\gamma}=s\}.
+\]
+
+\medskip
+
+Ein Tupel $t$ ist genau dann in $R\backslash (R\backslash S)$, wenn $t\in R$ und $\not(t\in R\backslash S)$ gilt. Dies ist äquivalent zu $t\in R\land (t\not\in R\lor t\in S)$,
+was wiederum äquivalent ist zu $t\in R$ und $t\in S$, also $t\in R\cap S$. Damit kann der Schnittoperator durch die Differenz ausgedrückt werden.
+
+\medskip
+
+Für die Selektion muss gezeigt werden, dass die Konjunktion, die Disjunktion und die Negation ersetzbar sind. Ein Tupel $t$ ist genau dann in $R[\lnot vga]$, wenn
+$t\in R$ ist und $t\not\models\vga$ gilt. Dies ist äquivalent zu $t\in R$ und $t\not\in R[\vga]$ und somit zu $t\in R\backslash R[\vga]$. Für Vergleichsausdrücke $\vga_1$ und $\vga_2$ gilt, dass $t$ genau dann in $R[\vga_1\land \vga_2]$ ist, wenn gilt $t\in R$ und $t\models \vga_1,\vga_2$. Dies ist äquivalent zu $t\in R[\vga_1]$ und $t\in R[\vga_2]$ und somit zu $t\in R[\vga_1\cap\vga_2]$. Analog gilt $t\in R[\vga_1\lor\vga_2]$ genau dann, wenn $t\in R[\vga_1]\cup R[\vga_2]$ gilt.
+
+\medskip
+
+Für die Division sei $\delta=\beta\backslash\gamma$. Ein Tupel $t$ ist genau dann in 
+\[
+R[\delta]\backslash((R[\delta]\times S)\backslash R)[\delta],
+\]
+wenn $t\in R[\delta]$ und nicht $t\in ((R[\delta]\times S)\backslash R)[\delta]$ gilt. Dies ist äquivalent dazu, dass ein $r\in R$ existiert mit 
+\[
+t=r|_{\delta}\quad\mbox{und}\quad t\not\in ((R[\delta]\times S)\backslash R)[\delta].
+\]
+Dies ist wiederum gleichwertig zu 
+\[
+\exists r\in R:\,t=r|_{\delta}\quad\mbox{und}\quad\forall r'\in ((R[\delta]\times S)\backslash R):\, t\neq r'|_{\delta}.
+\]
+Für den zweiten Teil kann die äquivalente Umformung
+\[
+\exists r\in R:\,t=r|_{\delta}\quad\mbox{und}\quad\forall r'\in (R[\delta]\times S):\, r'\not\in R\land t\neq r'|_{\delta}
+\]
+vorgenommen werden, was wiederum äquivalent ist zu
+\[
+\exists r\in R:\,t=r|_{\delta}\quad\mbox{und}\quad\forall r'\in T_{\delta\cup\gamma}:\, r'|_{\delta}\in R[\delta]\land r'_{\gamma}\in S\land r'\not\in R\land t\neq r'|_{\delta}.
+\]
+Eine äquivalente Umformung liefert
+\[
+\exists r\in R:\,t=r|_{\delta}\quad\mbox{und}\quad\forall r'\in T_{\gamma}:\, r'_{\gamma}\in S\land t\neq r'|_{\delta},
+\]
+was äquivalent ist zu $R\div S$.
+
+\medskip
+
+Betrachte für das Join $R$ über $\beta=\{B_1,\dots,B_{k_1}\}$ und $S$ über $\gamma=\{C_1,\dots,C_{k_2}\}$ für $k_1,k_2\leq|\alpha|$. Sei $\beta\cap\gamma=\{B_{i_1},\dots,B_{i_{\ell}}\}=\{C_{j_1},\dots,C_{j_{\ell}}\}$ mit $i_m\in[k_1],j_m\in[k_2]$ und $m\leq\min\{k_1,k_2\}$. Sei weiter 
+\[
+\gamma\cap\{C_1',\dots,C_{k_2}'\}=\emptyset=\beta\cap\{C_1',\dots,C_{k_2}'\}.
+\]
+Sei weiter 
+\[
+\gamma\backslash(\beta\cap\gamma)=\{D_1,\dots,D_{k_2-j_{\ell}}\}.
+\]
+Ein Tupel $t$ ist genau
+dann in 
+\begin{multline*}
+((R\times S[C_1\rightarrow C_1',\dots,C_{k_2}\rightarrow C_{k_2}'])[\bigwedge_{n\in[\ell]}B_{i_n}=C_{j_n}'])\\
+[B_1,\dots,B_{k_1},D_1,\dots,D_{k_2-j_{\ell}}],
+\end{multline*}
+wenn ein $t\in((R\times S[C_1\rightarrow C_1',\dots,C_{k_2}\rightarrow C_{k_2}'])[\bigwedge_{n\in[\ell]}B_{i_n}=C_{j_n}']$ existiert mit $t'=t|_{B_1,\dots,B_{k_1},D_1,\dots,D_{k_2-j_{\ell}}}$. Dies ist äquivalent zu der Existenz ein $t'\in R$ und der Existenz einen $t''\in S$ mit 
+\[
+t''(C_i)=t'(C_i')\land t'=t|_{B_1,\dots,B_{k_1},D_1,\dots,D_{k_2-j_{\ell}}},
+\]
+was wiederum äquivalent ist zur Existenz von $t'\in R$ und $t''\in S$ mit $t|_{\beta}=t'$ und $t|_{\gamma}=t''$.
+
+\medskip
+
+Da sich jede Relation als direktes Produkt von Relationen der Form $\{(A:c)\}$ und Vereinigung darstellen lässt, ist die Behauptung bewiesen.\qed
+
+\bigskip
+
+Da in der Behauptung das Komplement $\overline{\cdot}$ weder explizit genannt noch ausgeschlossen wurde, möchten wir noch anmerken, dass wenn das Komplement in $e$ zugelassen ist, in $e'$ wegen $R\backslash S=\overline{\overline{R}\cup S}$, die Differenz nicht benötigt wird, dafür aber das Komplement aufgenommen werden muss.
 \end{document}
