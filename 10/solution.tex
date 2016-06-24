@@ -33,6 +33,15 @@
 \maketitle
 
 \begin{aufgabe1}
+Um zu zeigen, dass sich für jede TRC-Anfrage zu einem DB-Schema $\sigma$ eine äquivalente Anfrage des DRC zu $\sigma$ finden lässt definieren wir uns einen Algorithmus, welcher TRC-Anfragen zu DRC-Anfragen umformt.
+Sei also eine allgemeine TRC-Anfrage $(x) / \theta(x)$, so lässt sich der Algorithmus wie folgt beschreiben: \\
+Sei zunächst für jede Variable $k$ in $x$ mit dem Typen $\tau_1, \cdots, \tau_n$ neue Variablen $k_1, \cdots, k_n$ mit den entsprechenden Typen eingeführt. Nun gilt es die Variablen zu ersetzen um DRC-Anfragen zu erhalten, dies geschieht nach den folgenden Regeln: \\
+Wenn $RT_i(k)$ gegeben ist, so muss dies durch $RT_i(k_1, \cdots, k_n)$ ersetzt werden.
+Falls $k.B_j \theta c(c \theta k.B_j)$ gegeben ist, so muss dies durch $k_j \theta c(c \theta k_j)$ ersetzt werden.
+Wenn $k.B_j \theta z.C_h$ gegeben ist, so muss dies ersetzt werden durch $k_j \theta z_h$. \\
+Falls $\exists k$ gegeben ist, so muss dies falls $k$ gebunden ist durch $(\exists k_1), \cdots, (\exists k_n)$ ersetzt werden. Falls $k$ ungebunden ist, so ist dies nicht nötig, da das Ergbnis ohnehin nicht weiterverwendet wird.
+Analog lässt sich $\forall k$ umformen.
+Zuguterletzt muss die Zielfunktion noch angepasst werden, entprechend also $(x) / \cdots$ zu $(x_1, \cdots, x_n) / \cdots$ umgeformt werden.
 \end{aufgabe1}
 
 \begin{aufgabe1}
