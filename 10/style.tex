@@ -1,0 +1,42 @@
+\newcounter{kapitel}
+\newcounter{anhang}
+\renewcommand{\theanhang}{\Alph{anhang}}  
+\setcounter{anhang}{1}
+\newcounter{ukapitel}[section]
+\newcounter{uukapitel}[section]
+
+
+\def\ukapitel#1{
+\refstepcounter{ukapitel}
+\setcounter{uukapitel}{0}
+
+\vspace{1.5cm}
+
+\hspace{-0.4cm}{\large {\bf \theukapitel.\, #1}}
+\addcontentsline{toc}{subsection}{\quad\theukapitel. #1}
+
+
+\bigskip
+
+}
+
+\def\kapitel#1{
+{\Large \section{#1}}
+\setcounter{ukapitel}{0}\setcounter{uukapitel}{1}
+\refstepcounter{kapitel}
+
+\bigskip
+
+}
+
+\def\uukapitel#1{
+\refstepcounter{uukapitel}
+
+\vspace{1cm}
+
+\hspace{-0.4cm}{\bf \theuukapitel. #1.}
+\addcontentsline{toc}{subsection}{\quad\theuukapitel. #1}
+}
+
+\numberwithin{ukapitel}{section}
+\numberwithin{uukapitel}{ukapitel}
