@@ -7,7 +7,8 @@
 \input{environments}
 
 \DeclareMathOperator{\dom}{dom}
-\DeclareMathOperator{\vga}{vga}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\pr}{pr}
 
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[utf8]{inputenc}
@@ -45,6 +46,50 @@ Zuguterletzt muss die Zielfunktion noch angepasst werden, entprechend also $(x) 
 \end{aufgabe1}
 
 \begin{aufgabe1}
+Die Idee für $\rank(e)$ ist in einer while-Schleife eine Variable hochzuzählen während von der Originalrelation die Stellen sukzessive abgeschnitten werden:
+\begin{align*}
+\begin{split}
+&y=E\downarrow\downarrow\uparrow \mbox{// Darstellung von 1}\\
+&x=e\\
+&\mbox{while }x\mbox{ do }(x=x\downarrow;y=y\uparrow)
+\end{split}
+\end{align*}
+Für die Projektion auf die $i$-te Komponente einer Relation $r_i$ sei $e$ die Darstellung von $\rank(r_i)-i$ und $e''$ die Darstellud von $i-1$. 
+\begin{align*}
+\begin{split}
+&x=e; \\
+&y=r_i; \\
+&\mbox{while }x\neq\emptyset\mbox{ do }(y=y'\downarrow;x=x\downarrow)\\
+&x=e'';\\
+&\mbox{while }x\neq\emptyset\mbox{ do }(y=y\circlearrowleft;y=y\downarrow;x=x\downarrow;)
+\end{split}
+\end{align*}
+Die Idee ist die hinteren Stellen abzuschneiden und dann immer zu permutieren und abzuschneiden, bis nur noch die richtige Stelle übrig ist.
+
+\medskip
+
+Definiere $\uparrow_d:\mathcal{R}_s\rightarrow\mathcal{R}_s;e\mapsto\{(d_1,\dots,d_s,d)\}|(d_1,\dots,d_s)\in e\}$ (wir haben diesen Operator leider nicht modelliert bekommen).
+Das kartesische Produkt ist gegeben durch
+\begin{align*}
+\begin{split}
+&x=\rank(e);\\
+&\mbox{while }x\neq\emptyset\mbox{ do }(e=e\uparrow_{\pr_x(e_2)};x=x\downarrow)
+\end{split}
+\end{align*}
+ Ist $r_2$ eine Relation, die auf die zu projizierenden Indizes vorhält, so ergibt sich die allgemeine Projektion durch
+ \begin{align*}
+ \begin{split}
+ &y=r_2\\
+ &x=\rank(r_1)\\
+ &\mbox{while }y\neq\emptyset\mbox{ do }(\mbox{while }x\neq\emptyset\mbox{ do }(\mbox{if }(x,y)\in E \mbox{ then }e_1=e_1\times \pr_y(e))))
+ \end{split}
+ \end{align*}
+Das Anfügen von Elementen von links ist definiert durch
+\begin{align*}
+\begin{split}
+E\downarrow\times e;
+\end{split}
+\end{align*}
 \end{aufgabe1}
 
 \end{document}
