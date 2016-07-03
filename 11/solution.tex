@@ -1,0 +1,111 @@
+\documentclass[12pt,a4paper]{amsart}
+
+\synctex = 1
+
+\input{alphabets}
+\input{commands}
+\input{environments}
+
+
+
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage{wasysym}
+\usepackage{stmaryrd}
+\usepackage{nicefrac}
+\usepackage{listings}
+\usepackage{pictex}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{german}
+
+\DeclareMathOperator{\vga}{vga}
+\DeclareMathOperator{\NF}{NF}
+\DeclareMathOperator{\trans}{trans}
+
+\lstset{basicstyle=\small}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\title{Blatt 11}
+
+\author{Daniel Schmidt \& Pamela Fleischmann}
+
+\maketitle
+
+
+\begin{aufgabe1}
+Nach Satz 2.6 ist das TRC mit beschränkter Interpretation äquivalent zur Relationenalgebra ohne Komplement. Diese wiederrum ist in die Relationenalgebra mit Komplement abbildbar, da in den einzelnen Ausdrücken das Komplement einfach weggelassen werden kann. Durch Satz 2.7 ist die Relationenalgebra mit Komplement in TRC-Anfragen mit unbeschränkter Interpretation überführbar. Somit sind auch alle Ausdrücke in TRC mit beschränkter Interpretation überführbar in unbeschränkte Interpretationen.
+\end{aufgabe1}
+
+\begin{aufgabe1}
+Seien ein DB-Schema $\sigma$ mit einem binären Relationstyp $(G,\{A, B\})$ und folgende DRC-
+Anfrage an $\sigma$ gegeben:
+\[
+q = (x)/(\exists y)(\forall z)(G(x, y) \land \lnot G(z, x)).
+\]
+Auf dem Eingabeband einer Turingmaschine liege ein Zustand $z$ zu $\sigma$ zusammen mit einem
+Tupel $t$ in kodierter Form wie folgt vor:
+{\tiny
+\begin{center}
+\begin{tabular}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\ \hline
+G&[&0&0&\#&0&1&]&[&1&0&\#&0&0&]&[&1&0&\#&0\\ \\ \hline \hline \\ 
+21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 \\ \hline
+1&]&[&0&1&\#&0&1&]&\#&[&1&0&]
+\end{tabular}
+\end{center}
+}
+Als erstes wird $[10]\#$ auf das Arbeitsband geschrieben
+{\tiny
+\begin{center}
+\begin{tabular}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\ \hline
+31 & \# \\ \hline \hline \\ 
+21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 \\ \hline
+\end{tabular}
+\end{center}
+}
+Für den Existenzquantor wird nun der Zustand durchgegangen, da $y$ nur in der zweiten Komponente von $G$ vorkommt, müssen nur die Tupel betrachtet werden, die
+$[10]$ in der ersten Komponente haben
+{\tiny
+\begin{center}
+\begin{tabular}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\ \hline
+31 & \# 2& 4 \\ \hline \hline \\ 
+21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 \\ \hline
+\end{tabular}
+\end{center}
+}
+was beim Vergleich mit 31 einen Mismatch gibt. Danach wird
+{\tiny
+\begin{center}
+\begin{tabular}{cccccccccccccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 & 18 & 19 & 20\\ \hline
+31 & \# 9 & 4 \\ \hline \hline \\ 
+21 & 22 & 23 & 24 & 25 & 26 & 27 & 28 & 29 & 30 & 31 & 32 & 33 & 34 \\ \hline
+\end{tabular}
+\end{center}
+}
+betrachtet und der Vergleich mit 31 ergibt, dass $[10]$ in der ersten Komponente vorkommt, somit ein $y$ existiert.
+Für dieses Tupel muss nun geguckt werden, ob für alle ersten Komponenten $\lnot G(z,x)$ gilt. Da $x$ fest ist, kann der Kopf auf dem Eingabeband nach $[10]$ in der zweiten Komponente suchen. Damit schreibt die TM nacheinander $2,4$, $9,4$, $16,4$, $23,4$ auf das Arbeitsband und vergleicht es mit $31$. Da alle Tests fehlschlagen, ist das Erkennungsproblem erfolgreich.
+\end{aufgabe1}
+
+
+\begin{aufgabe1}
+Mit Hilfe des Operators trans im DRC, kann die Addition $x+y=z$ ausgedrückt werden, wenn die Existenz einer Nachfolgerelation vorausgesetzt wird.
+\end{aufgabe1}
+
+{\em Beweis.}
+Laut Vorlesung ist mit der Ordnungsrelation ein minimales Element $0$ vorhanden. Da $(x,y)\not\in\NF$ für alle $x\in\Dom$ gilt, müssen unseres Erachtens einige Fälle gesondert betrachtet werden.\\
+1. Fall: $z=0$\\
+Dann gilt $x=y=0$ und die Addtion entspricht einem Vergleich.\\
+2. Fall: $x=0$, $y\neq 0$ ($x\neq 0$, $y=0$ analog)\\
+Dies bedeutet $y=z$ und entspricht wieder einem Vergleich.\\
+3. Fall: $x,y\neq 0$
+Es gilt genau dann $x+y=z$, wenn $x+y-1=z-1 \land (y-1,y),(z-1,z)\in\NF$ gilt. Sei o.B.d.A $x>y$ (dies kann mit einem Vergleich ermittelt werden). Mittels des Operators $\trans$
+müssen nun solange Vorgänger von $y$ und $z$ gesucht werden (bzw. {\em Vorfahren} bestimmt werden), bis $y=0$ gilt. Da $z$ simultan auf seinen Vorgänger reduziert wird, bleibt am Ende der Vergleich $x=z-y$ übrig. Im DRC ergibt sich somit $\bigwedge_{i\leq y} ( (y-i-1,y-i)\in\NF \land (z-i-1,z-i)\in\NF )\land x=z-y$. Mit der reflexiv-transitiven Hülle ergibt das $(0,1),(z-y,z-y+1)\in\trans(\NF)\land x=z-y$.
+
+\end{document}
